@@ -1,4 +1,3 @@
-# Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -11,7 +10,12 @@ class Solution:
         result = []
         if not root:
             return result
-        result.extend(self.inorderTraversal(root.left))
-        result.append(root.val)
-        result.extend(self.inorderTraversal(root.right))
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            curr = stack.pop()
+            result.append(curr.val)
+            root = curr.right
         return result
