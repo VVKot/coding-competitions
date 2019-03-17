@@ -1,19 +1,15 @@
 class Solution:
     def sortArrayByParityII(self, A):
-        odd_oop = []
-        even_oop = []
-        for i, num in enumerate(A):
-            if num % 2 == 1 and i % 2 == 0:
-                if even_oop:
-                    even_idx = even_oop.pop()
-                    A[i], A[even_idx] = A[even_idx], A[i]
-                else:
-                    odd_oop.append(i)
-
-            if num % 2 == 0 and i % 2 == 1:
-                if odd_oop:
-                    odd_idx = odd_oop.pop()
-                    A[i], A[odd_idx] = A[odd_idx], A[i]
-                else:
-                    even_oop.append(i)
+        i = 0
+        j = 1
+        N = len(A)
+        while i < N and j < N:
+            if A[i] % 2 == 0:
+                i += 2
+            elif A[j] % 2 == 1:
+                j += 2
+            else:
+                A[i], A[j] = A[j], A[i]
+                i += 2
+                j += 2
         return A
