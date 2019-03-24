@@ -1,5 +1,5 @@
 class Solution:
-    def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
+    def canVisitAllRooms(self, rooms):
         stack = [0]
         visited = set(stack)
         while stack:
