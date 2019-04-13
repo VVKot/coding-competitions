@@ -22,4 +22,3 @@ class Solution:
         r, c = self.find_rook(board)
         result = self.get_captures(board, r, c)
         return result
-˝
