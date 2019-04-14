@@ -7,6 +7,6 @@ class Solution:
                 result.append(curr)
             else:
                 for i, num in enumerate(rest):
-                    helper(curr + [num], rest[:i] + rest[i+1])
+                    helper(curr + [num], rest[:i] + rest[i+1:])
         helper([], nums)
         return result
