@@ -21,7 +21,7 @@ class Solution(object):
     def findKthLargest(self, nums, k):
         n = len(nums)
         left, right, target = 0, n - 1, n - k
-        while True:  # TODO check
+        while True:
             pivot_index = self.get_pivot(left, right)
             final, nums = self.partition(nums, pivot_index, left, right)
             if final == target:
