@@ -21,6 +21,7 @@ class Trie:
                 return False
         return False
 
+
 class StreamChecker:
 
     def __init__(self, words):
