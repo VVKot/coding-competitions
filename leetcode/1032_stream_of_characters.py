@@ -13,9 +13,9 @@ class Trie:
     def search(self, word):
         temp_trie = self.trie
         for letter in word:
+            if self.end in temp_trie:
+                return True
             if letter in temp_trie:
-                if self.end in temp_trie[letter]:
-                    return True
                 temp_trie = temp_trie[letter]
             else:
                 return False
