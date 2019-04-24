@@ -1,14 +1,11 @@
 class Solution(object):
 
     def singleNumber(self, nums):
-        seen = set()
-        seen_more_than_one = set()
-        for num in nums:
-            if num in seen_more_than_one:
-                continue
-            if num in seen:
-                seen_more_than_one.add(num)
-                seen.remove(num)
-            else:
-                seen.add(num)
-        return list(seen)[0]
+        ones, twos , n = 0, -1, len(nums)
+        for i in range(n):
+            ones = ones ^ nums[i] & twos
+            twos = twos ^ nums[i] & ones
+        return ones
+
+s = Solution()
+s.singleNumber([1,2,1,1])
