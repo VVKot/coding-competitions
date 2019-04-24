@@ -6,6 +6,3 @@ class Solution(object):
             ones = ones ^ nums[i] & twos
             twos = twos ^ nums[i] & ones
         return ones
-
-s = Solution()
-s.singleNumber([1,2,1,1])
