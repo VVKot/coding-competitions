@@ -3,15 +3,15 @@ from collections import defaultdict
 
 class Solution:
     def findJudge(self, N, trust):
-        ts = defaultdict(set)
+        truct_chain = defaultdict(set)
         for k, v in trust:
-            ts[k].add(v)
-        for i in range(1, N+1):
-            if not ts[i]:
-                for j in range(1, N+1):
-                    if j == i:
+            truct_chain[k].add(v)
+        for cand in range(1, N+1):
+            if not truct_chain[cand]:
+                for other in range(1, N+1):
+                    if other == cand:
                         continue
-                    if not i in ts[j]:
+                    if not cand in truct_chain[other]:
                         return -1
-                return i
+                return cand
         return -1
