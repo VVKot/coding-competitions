@@ -12,8 +12,10 @@ class Solution:
         temp = board[y][x]
         board[y][x] = '#'
         result = False
-        result = self.dfs(board, y+1, x, word[1:]) or self.dfs(board, y-1, x, word[1:]) \
-            or self.dfs(board, y, x+1, word[1:]) or self.dfs(board, y, x-1, word[1:])
+        result = self.dfs(board, y+1, x, word[1:]) \
+            or self.dfs(board, y-1, x, word[1:]) \
+            or self.dfs(board, y, x+1, word[1:]) \
+            or self.dfs(board, y, x-1, word[1:])
         board[y][x] = temp
         return result
 
