@@ -1,7 +1,10 @@
-class Solution(object):
+from typing import List
 
-    def singleNumber(self, nums):
-        ones, twos , n = 0, -1, len(nums)
+
+class Solution:
+
+    def singleNumber(self, nums: List[int]) -> int:
+        ones, twos, n = 0, -1, len(nums)
         for i in range(n):
             ones = ones ^ nums[i] & twos
             twos = twos ^ nums[i] & ones
