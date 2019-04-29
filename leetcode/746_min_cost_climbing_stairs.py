@@ -1,10 +1,10 @@
-class Solution(object):
+from typing import List
 
-    def minCostClimbingStairs(self, cost):
+
+class Solution:
+
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
         N = len(cost)
-        prev_prev = cost[0]
-        prev = cost[1]
         for i in range(2, N):
-            curr = min(prev_prev, prev) + cost[i]
-            prev_prev, prev = prev, curr
-        return min(prev, prev_prev)
+            cost[i] = min(cost[i-1], cost[i-2]) + cost[i]
+        return min(cost[N-1], cost[N-2])
