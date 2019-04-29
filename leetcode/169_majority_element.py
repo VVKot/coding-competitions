@@ -1,8 +1,15 @@
 from typing import List
-from collections import Counter
 
 
 class Solution:
 
     def majorityElement(self, nums: List[int]) -> int:
-        return Counter(nums).most_common()[0][0]
+        major, count = 0, 0
+        for num in nums:
+            if not count:
+                major, count = num, 1
+            elif num == major:
+                count += 1
+            else:
+                count -= 1
+        return major
