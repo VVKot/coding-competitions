@@ -1,3 +1,6 @@
+from typing import Dict
+
+
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -7,15 +10,22 @@ class TreeNode:
 
 class Solution:
 
-    def diameterOfBinaryTree(self, root):
-        self.res = 1
-
-        def get_depth(node):
-            if not node:
-                return 0
-            left = get_depth(node.left)
-            right = get_depth(node.right)
-            self.res = max(self.res, left+right+1)
-            return 1 + max(left, right)
-        get_depth(root)
-        return self.res - 1
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        res = 0
+        stack = [root]
+        vals = {}  # type: Dict[TreeNode, int]
+        while stack:
+            curr = stack[-1]
+            if curr.left and curr.left not in vals:
+                stack.append(curr.left)
+            elif curr.right and curr.right not in vals:
+                stack.append(curr.right)
+            else:
+                head = stack.pop()
+                left = vals[head.left] if head.left in vals else 0
+                right = vals[head.right] if head.right in vals else 0
+                vals[head] = 1 + max(left, right)
+                res = max(res, left + right)
+        return res
