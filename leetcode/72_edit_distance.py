@@ -1,23 +1,19 @@
 class Solution:
 
-    def minDistance(self, word1, word2, cache={}):
-        cache_key = (word1, word2)
-        if cache_key in cache:
-            return cache[cache_key]
-        result = 0
-        if not word1 or not word2:
-            result = len(word1) + len(word2)
-            cache[cache_key] = result
-            return result
-        char1 = word1[0]
-        char2 = word2[0]
-        if char1 == char2:
-            result = self.minDistance(word1[1:], word2[1:], cache)
-        else:
-            first = self.minDistance(word1[1:], word2, cache)
-            second = self.minDistance(word1, word2[1:], cache)
-            third = self.minDistance(word2[0] + word1[1:], word2, cache)
-            fourth = self.minDistance(word1, word1[0] + word2[1:], cache)
-            result = min([first, second, third, fourth]) + 1
-        cache[cache_key] = result
-        return result
+    def minDistance(self, word1: str, word2: str) -> int:
+        l1 = len(word1)
+        l2 = len(word2)
+        dp = list(range(l2+1))
+        for i in range(1, l1+1):
+            prev = i
+            for j in range(1, l2+1):
+                curr = 0
+                if word1[i-1] == word2[j-1]:
+                    curr = dp[j-1]
+                else:
+                    min_prev = min(prev, dp[j-1])
+                    curr = min(min_prev, dp[j]) + 1
+                dp[j-1] = prev
+                prev = curr
+            dp[l2] = prev
+        return dp[l2]
