@@ -1,4 +1,4 @@
-from copy import deepcopy
+from typing import Dict, Tuple
 
 
 class Solution:
@@ -7,21 +7,30 @@ class Solution:
         return [(y-1, x-2), (y-2, x-1), (y-1, x+2), (y-2, x+1),
                 (y+1, x+2), (y+2, x+1), (y+1, x-2), (y+2, x-1)]
 
-    def recalculate_probs(self, old, new):
-        for y in range(self.N):
-            for x in range(self.N):
-                near = self.get_near(y, x)
-                total = 0
-                for r, c in near:
-                    if 0 <= r < self.N and 0 <= c < self.N:
-                        total += old[r][c]
-                new[y][x] = total / 8.0
+    def is_legal(self, r, c):
+        return 0 <= r < self.N and 0 <= c < self.N
 
     def knightProbability(self, N: int, K: int, r: int, c: int) -> float:
         self.N = N
-        old = [[1 for _ in range(N)] for _ in range(N)]
-        for _ in range(K):
-            new = deepcopy(old)
-            self.recalculate_probs(old, new)
-            old = new
-        return old[r][c]
+        dp = {}  # type: Dict[Tuple[int, int, int], float]
+
+        def dfs(y, x, mult, step):
+            if self.is_legal(y, x):
+                if step < K:
+                    if (y, x, step) in dp:
+                        return dp[(y, x, step)]
+                    total = 0
+                    for yy, xx in self.get_near(y, x):
+                        curr = 0
+                        if (yy, xx, step) in dp:
+                            curr = dp[(yy, xx, step)]
+                        else:
+                            curr = dfs(yy, xx, mult/8, step+1)
+                        dp[(yy, xx, step)] = curr
+                        total += curr
+                    return total
+                else:
+                    return mult
+            else:
+                return 0
+        return dfs(r, c, 1, 0)
