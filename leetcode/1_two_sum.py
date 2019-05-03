@@ -1,9 +1,11 @@
+from typing import List
+
+
 class Solution:
-	def twoSum(self, nums, limit):
-		hash_table = {}
-		for j, curr in enumerate(nums):
-			complement = limit-curr
-			if complement in hash_table and hash_table[complement] != j:
-				return sorted([j, hash_table[complement]])
-			hash_table[curr] = j
-		return []
+
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        complement = {target - num: i for i, num in enumerate(nums)}
+        for j, num in enumerate(nums):
+            if num in complement and complement[num] != j:
+                return [j, complement[num]]
+        return [-1, -1]
