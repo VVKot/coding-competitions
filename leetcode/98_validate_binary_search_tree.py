@@ -1,4 +1,6 @@
-# Definition for a binary tree node.
+from typing import List
+
+
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -8,16 +10,16 @@ class TreeNode:
 
 class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
-        stack = []
-        pre = None
+        stack = []  # type: List[TreeNode]
+        prev = None
         while stack or root:
             if root:
                 stack.append(root)
                 root = root.left
             else:
                 curr = stack.pop()
-                if pre and curr.val <= pre.val:
+                if prev and prev.val >= curr.val:
                     return False
-                pre = curr
+                prev = curr
                 root = curr.right
         return True
