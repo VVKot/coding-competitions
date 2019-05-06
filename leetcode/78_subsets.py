@@ -1,23 +1,14 @@
-class Solution(object):
-    def subsets(self, nums):
-        res = []
-        for i in range(1 << len(nums)):
-            tmp = []
-            for j in range(len(nums)):
-                if i & 1 << j:
-                    tmp.append(nums[j])
-            res.append(tmp)
-        return res
+from typing import List
 
 
-"""
-0 1 2
-000 & (001, 010, 100) => []
-001 & (001, 010, 100) => [0]
-010 & (001, 010, 100) => [1]
-011 & (001, 010, 100) => [0, 1]
-100 & (001, 010, 100) => [2]
-101 & (001, 010, 100) => [0, 2]
-110 & (001, 010, 100) => [1, 2]
-111 & (001, 010, 100) => [0, 1, 2]
-"""
+class Solution:
+
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        result = []
+
+        def backtrack(combo, start):
+            result.append(combo)
+            for i in range(start, len(nums)):
+                backtrack(combo + [nums[i]], i + 1)
+        backtrack([], 0)
+        return result
