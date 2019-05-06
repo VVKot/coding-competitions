@@ -1,27 +1,24 @@
-from collections import defaultdict
-from typing import List, Dict, Set
+from typing import List
 
 
 class Solution:
 
     def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
-        safe = []
-        incm = defaultdict(set)  # type: Dict[int, Set[int]]
-        out = defaultdict(set)  # type: Dict[int, Set[int]]
-        for i, neig in enumerate(graph):
-            if not neig:
-                safe.append(i)
-            for j in neig:
-                incm[j].add(i)
-                out[i].add(j)
-        result = set(safe)
-        while safe:
-            curr = safe.pop()
-            for j in incm[curr]:
-                out[j].remove(curr)
-                if not out[j]:
-                    safe.append(j)
-                    result.add(j)
-        res = list(result)
-        res.sort()
-        return res
+        WHITE, GRAY, BLACK = 0, 1, 2
+        visited = [WHITE] * len(graph)
+        result = []
+
+        def in_cycle(node):
+            visited[node] = GRAY
+            for neig in graph[node]:
+                if visited[neig] == GRAY:
+                    return True
+                if not visited[neig] and in_cycle(neig):
+                    return True
+            visited[node] = BLACK
+            result.append(node)
+            return False
+        for i in range(len(graph)):
+            if not visited[i]:
+                in_cycle(i)
+        return sorted(result)
