@@ -1,13 +1,17 @@
-"""
-# Definition for a Node.
-class Node(object):
+from typing import List
+
+
+class Node:
+
     def __init__(self, val, children):
         self.val = val
         self.children = children
-"""
-class Solution(object):
-    def preorder(self, root):
-        result = []
+
+
+class Solution:
+
+    def preorder(self, root: 'Node') -> List[int]:
+        result = []  # type: List[int]
         if not root:
             return result
         stack = [root]
@@ -17,4 +21,3 @@ class Solution(object):
             if curr.children:
                 stack.extend(curr.children[::-1])
         return result
-        
