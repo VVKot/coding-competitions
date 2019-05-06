@@ -1,4 +1,5 @@
 class TreeNode:
+
     def __init__(self, x):
         self.val = x
         self.left = None
@@ -6,10 +7,12 @@ class TreeNode:
 
 
 class Solution:
-    def mergeTrees(self, t1, t2):
-        if not t1 and not t2:
-            return None
-        result = TreeNode((t1.val if t1 else 0) + (t2.val if t2 else 0))
-        result.left = self.mergeTrees(t1 and t1.left, t2 and t2.left)
-        result.right = self.mergeTrees(t1 and t1.right, t2 and t2.right)
-        return result
+
+    def mergeTrees(self, t1: TreeNode, t2: TreeNode) -> TreeNode:
+        if t1 and t2:
+            node = TreeNode(t1.val + t2.val)
+            node.left = self.mergeTrees(t1.left, t2.left)
+            node.right = self.mergeTrees(t1.right, t2.right)
+            return node
+        else:
+            return t1 or t2
