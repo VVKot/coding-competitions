@@ -1,6 +1,6 @@
 class Solution:
-    def fib(self, N):
-        a, b = 0, 1
+    def fib(self, N: int) -> int:
+        first, second = 0, 1
         for _ in range(N):
-            a, b = b, a+b
-        return a
+            first, second = second, first + second
+        return first
