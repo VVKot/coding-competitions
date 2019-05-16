@@ -11,17 +11,22 @@ class Solution:
     def copyRandomList(self, head: Node) -> Node:
         if not head:
             return head
-        node_map = dict()
         curr = head
+        # duplicate
         while curr:
-            new = Node(curr.val, None, None)
-            node_map[curr] = new
-            curr = curr.next
+            new = Node(curr.val, curr.next, None)
+            curr.next, curr = new, curr.next
         curr = head
+        # copy random
         while curr:
-            if curr.next:
-                node_map[curr].next = node_map[curr.next]
             if curr.random:
-                node_map[curr].random = node_map[curr.random]
-            curr = curr.next
-        return node_map[head]
+                curr.next.random = curr.random.next
+            curr = curr.next.next
+        curr, new_head, prev = head, head.next, None
+        # restore
+        while curr and curr.next:
+            if prev:
+                prev.next = curr.next
+            prev = curr.next
+            curr.next, curr = curr.next.next, curr.next.next
+        return new_head
