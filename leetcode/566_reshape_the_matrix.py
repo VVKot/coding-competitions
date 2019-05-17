@@ -10,9 +10,11 @@ class Solution:
         cols = len(nums[0])
         if rows * cols != r * c:
             return nums
-        cells = [num for row in nums for num in row]
-        result = []
-        for i in range(r):
-            left, right = i*c, (i+1)*c
-            result.append(cells[left:right])
+        result = []  # type: List[List[int]]
+        for y in range(r):
+            result.append([])
+            for x in range(c):
+                index = y * c + x
+                val = nums[index // cols][index % cols]
+                result[y].append(val)
         return result
