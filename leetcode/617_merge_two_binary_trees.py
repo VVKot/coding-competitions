@@ -9,10 +9,19 @@ class TreeNode:
 class Solution:
 
     def mergeTrees(self, t1: TreeNode, t2: TreeNode) -> TreeNode:
-        if t1 and t2:
-            node = TreeNode(t1.val + t2.val)
-            node.left = self.mergeTrees(t1.left, t2.left)
-            node.right = self.mergeTrees(t1.right, t2.right)
-            return node
-        else:
-            return t1 or t2
+        if not t1:
+            return t2
+        stack = [(t1, t2)]
+        while stack:
+            curr1, curr2 = stack.pop()
+            if curr2:
+                curr1.val += curr2.val
+                if curr1.left:
+                    stack.append((curr1.left, curr2.left))
+                else:
+                    curr1.left = curr2.left
+                if curr1.right:
+                    stack.append((curr1.right, curr2.right))
+                else:
+                    curr1.right = curr2.right
+        return t1
