@@ -1,27 +1,25 @@
+from itertools import zip_longest
+from typing import Generator
+
+
 class Solution:
 
     BACKSPACE_CHARACTER = '#'
 
     def backspaceCompare(self, S: str, T: str) -> bool:
-        len_s, len_t = len(S), len(T)
-        i, j = len_s - 1, len_t - 1
-        while i > -1 or j > -1:
-            i, at_i = self.get_next(S, i)
-            j, at_j = self.get_next(T, j)
-            if at_i != at_j:
+        s_gen = self.get_next(S)
+        t_gen = self.get_next(T)
+        for s_ch, t_ch in zip_longest(s_gen, t_gen):
+            if s_ch != t_ch:
                 return False
-        return i == j
+        return True
 
-    def get_next(self, seq, index):
+    def get_next(self, seq: str) -> Generator[str, None, None]:
         backspace_count = 0
-        while index >= 0:
-            curr = seq[index]
-            if curr == Solution.BACKSPACE_CHARACTER:
+        for ch in reversed(seq):
+            if ch == Solution.BACKSPACE_CHARACTER:
                 backspace_count += 1
-            else:
-                if backspace_count == 0:
-                    new_index = index - 1
-                    return new_index, curr
+            elif backspace_count > 0:
                 backspace_count -= 1
-            index -= 1
-        return -1, Solution.BACKSPACE_CHARACTER
+            else:
+                yield ch
