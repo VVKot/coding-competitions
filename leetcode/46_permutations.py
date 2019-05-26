@@ -1,12 +1,7 @@
-class Solution:
-    def permute(self, nums):
-        result = []
+import itertools
+from typing import List
 
-        def helper(curr, rest):
-            if not rest:
-                result.append(curr)
-            else:
-                for i, num in enumerate(rest):
-                    helper(curr + [num], rest[:i] + rest[i+1:])
-        helper([], nums)
-        return result
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        return list(list(perm) for perm in itertools.permutations(nums))
