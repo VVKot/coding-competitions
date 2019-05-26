@@ -4,7 +4,7 @@ from typing import List
 
 class Solution:
     def deleteAndEarn(self, nums: List[int]) -> int:
-        N, nums_counter = len(nums), Counter(nums)
+        nums_counter = Counter(nums)
         prevprev, prev = (float('inf'), 0), (float('inf'), 0)
         for num, count in sorted(nums_counter.items()):
             curr = num * count
