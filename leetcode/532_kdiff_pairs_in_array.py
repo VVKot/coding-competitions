@@ -1,13 +1,14 @@
-from typing import List, Set
+from typing import List
+from collections import Counter
 
 
 class Solution:
     def findPairs(self, nums: List[int], k: int) -> int:
-        result = set()
-        nums.sort()
-        comps = set()  # type: Set[int]
-        for num in nums:
-            if num - k in comps:
-                result.add((num, num-k))
-            comps.add(num)
-        return len(result)
+        c = Counter(nums)
+        result = 0
+        for num, count in c.items():
+            if k > 0 and num + k in c:
+                result += 1
+            if not k and count > 1:
+                result += 1
+        return result
