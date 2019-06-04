@@ -17,19 +17,18 @@ class Solution:
         if not root:
             return root
         queue = collections.deque([(root, 0)])
-        row, curr_level = [], -1  # type: List[Node], int
+        prev, curr_level = None, -1  # type: Node, int
         while queue:
             node, level = queue.popleft()
             if curr_level != level:
-                self.process_row(row)
-                row = []
                 curr_level = level
-            row.append(node)
+            else:
+                prev.next = node
+            prev = node
             if node.left:
                 queue.append((node.left, level + 1))
             if node.right:
                 queue.append((node.right, level + 1))
-        self.process_row(row)
         return root
 
     def process_row(self, nodes: List[Node]):
