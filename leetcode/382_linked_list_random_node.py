@@ -12,18 +12,15 @@ class ListNode:
 class Solution:
 
     def __init__(self, head: ListNode):
-        """
-        @param head The linked list's head.
-        Note that the head is guaranteed to be not null.
-        """
-        self.store = []  # type: List[int]
-        while head:
-            self.store.append(head.val)
-            head = head.next
+        self.head = head
 
     def getRandom(self) -> int:
-        """
-        Returns a random node's value.
-        """
-        random_index = random.randint(0, len(self.store) - 1)
-        return self.store[random_index]
+        count = 0
+        random_val = -1
+        curr = self.head
+        while curr:
+            if random.randint(0, count) == 0:
+                random_val = curr.val
+            count += 1
+            curr = curr.next
+        return random_val
