@@ -1,5 +1,4 @@
 import collections
-from typing import List
 
 
 class Node:
@@ -30,8 +29,3 @@ class Solution:
             if node.right:
                 queue.append((node.right, level + 1))
         return root
-
-    def process_row(self, nodes: List[Node]):
-        count = len(nodes)
-        for i in range(count - 1):
-            nodes[i].next = nodes[i + 1]
