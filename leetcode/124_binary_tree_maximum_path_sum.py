@@ -14,13 +14,9 @@ class Solution:
         def get_val(node):
             if not node:
                 return 0
-            left = get_val(node.left)
-            right = get_val(node.right)
-            val = node.val
-            val_left, val_right = val + left, val + right
-            val_left_right = val + left + right
-            propagate = max([val, val_left, val_right])
-            self.res = max([self.res, propagate, val_left_right])
-            return propagate
+            left = max(0, get_val(node.left))
+            right = max(0, get_val(node.right))
+            self.res = max(self.res, node.val + left + right)
+            return node.val + max(left, right)
         get_val(root)
         return self.res
