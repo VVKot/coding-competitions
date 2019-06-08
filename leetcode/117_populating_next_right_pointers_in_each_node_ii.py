@@ -1,4 +1,4 @@
-import collections
+from typing import Optional
 
 
 class Node:
@@ -12,20 +12,25 @@ class Node:
 
 class Solution:
 
-    def connect(self, root: Node) -> Node:
-        if not root:
-            return root
-        queue = collections.deque([(root, 0)])
-        prev, curr_level = None, -1  # type: Node, int
-        while queue:
-            node, level = queue.popleft()
-            if curr_level != level:
-                curr_level = level
-            else:
-                prev.next = node
-            prev = node
-            if node.left:
-                queue.append((node.left, level + 1))
-            if node.right:
-                queue.append((node.right, level + 1))
+    def connect(self, root: Node) -> Optional[Node]:
+        curr = root  # type: Optional[Node]
+        prev = None  # type: Optional[Node]
+        head = None  # type: Optional[Node]
+        while curr:
+            while curr:
+                if curr.left:
+                    if prev:
+                        prev.next = curr.left
+                    else:
+                        head = curr.left
+                    prev = curr.left
+                if curr.right:
+                    if prev:
+                        prev.next = curr.right
+                    else:
+                        head = curr.right
+                    prev = curr.right
+                curr = curr.next
+            curr = head
+            head = prev = None
         return root
