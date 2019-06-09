@@ -3,6 +3,10 @@ from typing import List
 
 class Solution:
     def moveZeroes(self, nums: List[int]) -> None:
-        zeroes = nums.count(0)
-        nums[:] = [i for i in nums if i]
-        nums += [0] * zeroes
+        write, N = 0, len(nums)
+        for num in nums:
+            if num:
+                nums[write] = num
+                write += 1
+        for i in range(write, N):
+            nums[i] = 0
