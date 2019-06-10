@@ -19,10 +19,9 @@ class Solution:
 
         def union(node1, node2):
             rank1, rank2 = ranks[node1], ranks[node2]
-            if rank1 == rank2:
-                ranks[node1] += 1
-                parents[node2] = node1
-            elif rank1 > rank2:
+            if rank1 >= rank2:
+                if rank1 == rank2:
+                    ranks[node1] += 1
                 parents[node2] = node1
             else:
                 parents[node1] = node2
