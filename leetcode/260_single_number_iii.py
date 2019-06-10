@@ -1,15 +1,17 @@
-from functools import reduce
+import functools
 import operator
+from typing import List
 
 
 class Solution:
-    def singleNumber(self, nums):
-        xor2 = reduce(operator.xor, nums)
-        last_set_bit = xor2 & (-xor2)
-        n1, n2 = 0, 0
+
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        diff = functools.reduce(operator.xor, nums)
+        diff &= -diff
+        result = [0, 0]
         for num in nums:
-            if num & last_set_bit:
-                n1 ^= num
+            if num & diff:
+                result[0] ^= num
             else:
-                n2 ^= num
-        return [n1, n2]
+                result[1] ^= num
+        return result
