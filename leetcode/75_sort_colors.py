@@ -2,15 +2,14 @@ from typing import List
 
 
 class Solution:
+
     def sortColors(self, nums: List[int]) -> None:
-        zero, one, two = 0, 0, len(nums) - 1
-        while one <= two:
-            curr = nums[one]
-            if curr == 0:
-                nums[zero], nums[one] = nums[one], nums[zero]
+        zero = one = 0
+        for i, num in enumerate(nums):
+            nums[i] = 2
+            if num < 2:
+                nums[one] = 1
+                one += 1
+            if num == 0:
+                nums[zero] = 0
                 zero += 1
-            elif curr == 2:
-                nums[one], nums[two] = nums[two], nums[one]
-                two -= 1
-                one -= 1
-            one += 1
