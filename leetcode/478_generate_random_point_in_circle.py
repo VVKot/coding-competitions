@@ -1,4 +1,3 @@
-import math
 import random
 from typing import List
 
@@ -9,10 +8,13 @@ class Solution:
         self.radius = radius
         self.x_center = x_center
         self.y_center = y_center
+        self.x_min, self.x_max = x_center - radius, x_center + radius
+        self.y_min, self.y_max = y_center - radius, y_center + radius
 
     def randPoint(self) -> List[float]:
-        dist = math.sqrt(random.random()) * self.radius
-        degree = random.random() * 2 * math.pi
-        x = self.x_center + dist * math.cos(degree)
-        y = self.y_center + dist * math.sin(degree)
-        return [x, y]
+        while True:
+            x = random.uniform(self.x_min, self.x_max)
+            y = random.uniform(self.y_min, self.y_max)
+            dist = (x - self.x_center) ** 2 + (y - self.y_center) ** 2
+            if dist <= self.radius ** 2:
+                return [x, y]
