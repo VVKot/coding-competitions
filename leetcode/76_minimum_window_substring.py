@@ -2,7 +2,8 @@ from collections import Counter
 
 
 class Solution:
-    def minWindow(self, s, t):
+
+    def minWindow(self, s: str, t: str) -> str:
         needed = Counter(t)
         missing = len(t)
         start, end = 0, 0
