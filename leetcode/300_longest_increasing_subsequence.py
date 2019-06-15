@@ -1,8 +1,15 @@
-import bisect
+from typing import List
+
 
 class Solution:
-    def lengthOfLIS(self, nums):
-        lis = [float('inf')] * (len(nums) + 1)
-        for num in nums:
-            lis[bisect.bisect_left(lis, num)] = num
-        return lis.index(float('inf'))
+
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        N = len(nums)
+        dp = [1] * N
+        for i in range(1, N):
+            for j in range(0, i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return max(dp)
