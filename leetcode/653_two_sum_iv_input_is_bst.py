@@ -1,4 +1,4 @@
-from typing import Set
+from typing import Generator
 
 
 class TreeNode:
@@ -11,19 +11,32 @@ class TreeNode:
 class Solution:
 
     def findTarget(self, root: TreeNode, k: int) -> bool:
-        seen = set()  # type: Set[int]
-        stack = [root]
-        while stack:
-            curr = stack.pop()
-            if not curr:
-                continue
-            if curr.val in seen:
+        if not root:
+            return False
+        small_gen = self.small_to_big(root)
+        big_gen = self.big_to_small(root)
+        small = next(small_gen)
+        big = next(big_gen)
+        while small != big:
+            curr_sum = small + big
+            if curr_sum == k:
                 return True
-            seen.add(k - curr.val)
-            if curr.val / 2 > k:
-                stack.append(curr.right)
-                stack.append(curr.left)
+            if curr_sum > k:
+                big = next(big_gen)
             else:
-                stack.append(curr.left)
-                stack.append(curr.right)
+                small = next(small_gen)
         return False
+
+    def small_to_big(self, node: TreeNode) -> Generator[int, None, None]:
+        if node.left:
+            yield from self.small_to_big(node.left)
+        yield node.val
+        if node.right:
+            yield from self.small_to_big(node.right)
+
+    def big_to_small(self, node: TreeNode) -> Generator[int, None, None]:
+        if node.right:
+            yield from self.big_to_small(node.right)
+        yield node.val
+        if node.left:
+            yield from self.big_to_small(node.left)
