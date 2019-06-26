@@ -1,8 +1,9 @@
+import functools
 import operator
-from functools import reduce
+from typing import List
 
 
 class Solution:
-    def missingNumber(self, nums):
+    def missingNumber(self, nums: List[int]) -> int:
         n = len(nums)
-        return reduce(operator.xor, nums) ^ [n, 1, n+1, 0][n % 4]
+        return functools.reduce(operator.xor, nums) ^ [n, 1, n+1, 0][n % 4]
