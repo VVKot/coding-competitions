@@ -1,12 +1,13 @@
-from collections import defaultdict
+import collections
+from typing import List
 
 
-class Solution(object):
+class Solution:
 
-    def numPairsDivisibleBy60(self, time):
-        comp = defaultdict(int)
-        result = 0
+    def numPairsDivisibleBy60(self, time: List[int]) -> int:
+        pair_count = 0
+        comp = collections.defaultdict(int)
         for t in time:
-            result += comp[-t % 60]
+            pair_count += comp[-t % 60]
             comp[t % 60] += 1
-        return result
+        return pair_count
