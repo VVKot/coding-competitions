@@ -7,19 +7,13 @@ class Solution:
                      customers: List[int],
                      grumpy: List[int],
                      X: int) -> int:
-        N = len(customers)
-        satisfied_count = sum(customers[i] for i in range(N)
-                              if not grumpy[i])
-        trick_len = min(N, X)
-        tricked_count = sum(customers[i] for i in range(trick_len)
-                            if grumpy[i])
-        result = satisfied_count + tricked_count
-        i = 0
-        while i + X < N:
+        already_satisfied = max_tricked = current_tricked = 0
+        for i, count in enumerate(customers):
             if grumpy[i]:
-                tricked_count -= customers[i]
-            if grumpy[i + X]:
-                tricked_count += customers[i + X]
-            result = max(result, satisfied_count + tricked_count)
-            i += 1
-        return result
+                current_tricked += count
+            else:
+                already_satisfied += count
+            if i >= X:
+                current_tricked -= grumpy[i - X] * customers[i - X]
+            max_tricked = max(max_tricked, current_tricked)
+        return already_satisfied + max_tricked
