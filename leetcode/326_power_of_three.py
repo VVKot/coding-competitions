@@ -1,9 +1,6 @@
-
 class Solution:
 
+    three_to_nineteenth = 1162261467
+
     def isPowerOfThree(self, n: int) -> bool:
-        if n < 1:
-            return False
-        while not n % 3:
-            n //= 3
-        return n == 1
+        return n > 0 and not self.three_to_nineteenth % n
