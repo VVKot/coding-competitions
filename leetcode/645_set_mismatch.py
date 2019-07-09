@@ -1,15 +1,18 @@
-import collections
 from typing import List
 
 
 class Solution:
 
     def findErrorNums(self, nums: List[int]) -> List[int]:
-        count = collections.Counter(nums)
-        duplicated = count.most_common(1)[0][0]
-        missing = -1
-        for i in range(1, len(nums) + 1):
-            if i not in count:
-                missing = i
+        duplicated, missing = -1, -1
+        for num in nums:
+            val = abs(num)
+            if nums[val - 1] > 0:
+                nums[val - 1] *= -1
+            else:
+                duplicated = val
+        for i, num in enumerate(nums):
+            if num > 0:
+                missing = i + 1
                 break
         return [duplicated, missing]
