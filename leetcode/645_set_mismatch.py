@@ -1,18 +1,27 @@
+import functools
+import operator
 from typing import List
 
 
 class Solution:
 
     def findErrorNums(self, nums: List[int]) -> List[int]:
-        duplicated, missing = -1, -1
+        N = len(nums)
+        total = functools.reduce(operator.xor, nums)
+        total = functools.reduce(operator.xor, range(1, N+1), total)
+        rightmost_set = total & ~(total - 1)
+        xor1 = xor2 = 0
         for num in nums:
-            val = abs(num)
-            if nums[val - 1] > 0:
-                nums[val - 1] *= -1
+            if num & rightmost_set:
+                xor1 ^= num
             else:
-                duplicated = val
-        for i, num in enumerate(nums):
-            if num > 0:
-                missing = i + 1
-                break
-        return [duplicated, missing]
+                xor2 ^= num
+        for num in range(1, N+1):
+            if num & rightmost_set:
+                xor1 ^= num
+            else:
+                xor2 ^= num
+        for num in nums:
+            if num == xor1:
+                return [xor1, xor2]
+        return [xor2, xor1]
