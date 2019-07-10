@@ -1,4 +1,3 @@
-from sys import maxsize
 from typing import List
 
 
@@ -11,13 +10,9 @@ class Solution:
         write_pointer = m + n - 1
         nums1_pointer = m - 1
         nums2_pointer = n - 1
-        while nums1_pointer >= 0 or nums2_pointer >= 0:
-            first = nums1[nums1_pointer] \
-                if nums1_pointer >= 0 \
-                else maxsize
-            second = nums2[nums2_pointer] \
-                if nums2_pointer >= 0 \
-                else maxsize
+        while nums1_pointer >= 0 and nums2_pointer >= 0:
+            first = nums1[nums1_pointer]
+            second = nums2[nums2_pointer]
             if first > second:
                 nums1[write_pointer] = first
                 nums1_pointer -= 1
@@ -25,3 +20,7 @@ class Solution:
                 nums1[write_pointer] = second
                 nums2_pointer -= 1
             write_pointer -= 1
+        while nums2_pointer >= 0:
+            nums1[write_pointer] = nums2[nums2_pointer]
+            write_pointer -= 1
+            nums2_pointer -= 1
