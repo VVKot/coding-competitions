@@ -1,12 +1,15 @@
-from typing import List, Dict
+from typing import List, Set
 
 
 class Solution:
 
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        last_seen = {}  # type: Dict[int, int]
+        seen = set()  # type: Set[int]
         for i, val in enumerate(nums):
-            if val in last_seen and i - last_seen[val] <= k:
+            if i > k:
+                seen.remove(nums[i - k - 1])
+            if val in seen:
                 return True
-            last_seen[val] = i
+            else:
+                seen.add(val)
         return False
