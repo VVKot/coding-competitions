@@ -1,19 +1,12 @@
-import collections
-from typing import List
+from typing import List, Dict
 
 
 class Solution:
 
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        dup_range = k+1
-        num_count = collections.Counter(nums[:dup_range])
-        if any(count > 1 for count in num_count.values()):
-            return True
-        nums_len = len(nums)
-        for i in range(0, nums_len-dup_range):
-            begin, end = nums[i], nums[i+dup_range]
-            num_count[begin] -= 1
-            num_count[end] += 1
-            if num_count[end] > 1:
+        last_seen = {}  # type: Dict[int, int]
+        for i, val in enumerate(nums):
+            if val in last_seen and i - last_seen[val] <= k:
                 return True
+            last_seen[val] = i
         return False
