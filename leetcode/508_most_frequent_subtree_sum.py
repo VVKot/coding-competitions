@@ -1,9 +1,8 @@
 import collections
-from typing import List, Tuple
+from typing import Counter, List
 
 
 class TreeNode:
-
     def __init__(self, x):
         self.val = x
         self.left = None
@@ -13,21 +12,17 @@ class TreeNode:
 class Solution:
 
     def findFrequentTreeSum(self, root: TreeNode) -> List[int]:
-        _, sums = self.get_subtree_sums(root)
-        result = []  # type: List[int]
-        if not sums:
-            return result
-        sums_count = collections.Counter(sums)
-        max_count = max(sums_count.values())
-        for num, count in sums_count.items():
-            if count == max_count:
-                result.append(num)
-        return result
-
-    def get_subtree_sums(self, root: TreeNode) -> Tuple[int, List[int]]:
         if not root:
-            return 0, []
-        left_total, left_sums = self.get_subtree_sums(root.left)
-        right_total, right_sums = self.get_subtree_sums(root.right)
-        total = left_total + right_total + root.val
-        return total, left_sums + right_sums + [total]
+            return []
+        sums_count = collections.Counter()  # type: Counter[int]
+
+        def dfs(node):
+            if not node:
+                return 0
+            total = node.val + dfs(node.left) + dfs(node.right)
+            sums_count[total] += 1
+            return total
+
+        dfs(root)
+        max_count = max(sums_count.values())
+        return [_sum for _sum in sums_count if sums_count[_sum] == max_count]
