@@ -13,15 +13,12 @@ class Solution:
         event_start = head.next
         curr = odd_end = head
         index = 1
-        while curr:
+        while curr and curr.next:
             if index & 1:
-                odd_end = curr
+                odd_end = curr.next.next or curr
             index += 1
-            if curr.next:
-                next_node = curr.next
-                curr.next = curr.next.next
-                curr = next_node
-            else:
-                break
+            next_node = curr.next
+            curr.next = curr.next.next
+            curr = next_node
         odd_end.next = event_start
         return head
