@@ -9,6 +9,7 @@ def binary_search(arr, num, left, right):
             left = mid + 1
     return -1
 
+
 def get_shift_point(shift_arr):
     left = 0
     right = len(shift_arr) - 1
@@ -19,6 +20,7 @@ def get_shift_point(shift_arr):
         else:
             right = mid
     return left
+
 
 def shifted_arr_search(shift_arr, num):
     if not shift_arr:

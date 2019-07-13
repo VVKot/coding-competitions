@@ -11,6 +11,7 @@ def calculate_suffix_sums(grants):
             result[i] = (num, total)
     return result
 
+
 def calculate_grants_cap(grants_array, new_budget):
     N = len(grants_array)
     for i in range(1, N):
