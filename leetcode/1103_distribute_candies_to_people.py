@@ -4,12 +4,11 @@ from typing import List
 class Solution:
 
     def distributeCandies(self, candies: int, num_people: int) -> List[int]:
-        amount = 1
+        amount = 0
         distribution = [0] * num_people
         while candies:
-            for i in range(num_people):
-                candies_to_give = min(amount, candies)
-                candies -= candies_to_give
-                distribution[i] += candies_to_give
-                amount += 1
+            to_give = min(amount+1, candies)
+            distribution[amount % num_people] += to_give
+            amount += 1
+            candies -= to_give
         return distribution
