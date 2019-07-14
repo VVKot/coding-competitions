@@ -2,20 +2,20 @@ from typing import List
 
 
 class Solution:
+
     def trap(self, height: List[int]) -> int:
-        l, r = 0, len(height) - 1
-        max_l, max_r, res = 0, 0, 0
-        while l <= r:
-            at_l = height[l]
-            at_r = height[r]
-            if at_l <= at_r:
-                max_l = max(max_l, at_l)
-                if at_l < max_l:
-                    res += max_l - at_l
-                l += 1
+        trapped_volume = 0
+        left, right = 0, len(height) - 1
+        left_wall = right_wall = 0
+        while left <= right:
+            curr_left = height[left]
+            curr_right = height[right]
+            if curr_left <= curr_right:
+                left_wall = max(left_wall, curr_left)
+                trapped_volume += left_wall - curr_left
+                left += 1
             else:
-                max_r = max(max_r, at_r)
-                if at_r < max_r:
-                    res += max_r - at_r
-                r -= 1
-        return res
+                right_wall = max(right_wall, curr_right)
+                trapped_volume += right_wall - curr_right
+                right -= 1
+        return trapped_volume
