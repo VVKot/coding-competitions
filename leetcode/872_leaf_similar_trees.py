@@ -1,5 +1,4 @@
 from itertools import zip_longest
-from typing import Iterable
 
 
 class TreeNode:
@@ -13,17 +12,11 @@ class TreeNode:
 class Solution:
 
     def leafSimilar(self, root1: TreeNode, root2: TreeNode) -> bool:
-        return all(a == b for a, b in zip_longest(
-            self.preorder(root1), self.preorder(root2)))
+        def dfs(node):
+            if node:
+                if not node.left and not node.right:
+                    yield node.val
+                yield from dfs(node.left)
+                yield from dfs(node.right)
 
-    def preorder(self, root: TreeNode) -> Iterable[int]:
-        stack = [root]
-        while stack:
-            curr = stack.pop()
-            if not curr:
-                continue
-            if not curr.left and not curr.right:
-                yield curr.val
-            else:
-                stack.append(curr.right)
-                stack.append(curr.left)
+        return all(a == b for a, b in zip_longest(dfs(root1), dfs(root2)))
