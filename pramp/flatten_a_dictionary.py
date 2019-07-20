@@ -1,18 +1,19 @@
-from typing import Dict
+def flatten_dictionary(dictionary):
+    return get_flattened(dictionary, "")
 
 
-def iterate_dict(dic: Dict[str, str], base_path: str) -> Dict[str, str]:
+def get_flattened(dic, base_path):
     result = {}
     for k, v in dic.items():
-        key = base_path + "." + k
-        if not base_path or not k:
-            key = base_path or k
+        key = get_path(base_path, k)
         if isinstance(v, dict):
-            result.update(iterate_dict(v, key))
+            result.update(get_flattened(v, key))
         else:
             result[key] = v
     return result
 
 
-def flatten_dictionary(dictionary: Dict[str, str]) -> Dict[str, str]:
-    return iterate_dict(dictionary, "")
+def get_path(base_path, current_key):
+    if base_path and current_key:
+        return base_path + '.' + current_key
+    return base_path or current_key
