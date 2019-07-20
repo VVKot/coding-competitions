@@ -7,7 +7,7 @@ class TreeNode:
 
 
 class Solution:
-    
+
     def pruneTree(self, root: TreeNode) -> TreeNode:
         if not root:
             return root
