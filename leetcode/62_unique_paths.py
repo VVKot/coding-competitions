@@ -1,5 +1,8 @@
-from math import factorial
-
 class Solution:
-    def uniquePaths(self, m, n):
-        return factorial(m+n-2)//factorial(m-1)//factorial(n-1)
+
+    def uniquePaths(self, cols: int, rows: int) -> int:
+        curr = [1] + [0] * (cols-1)
+        for _ in range(rows):
+            for i in range(1, cols):
+                curr[i] += curr[i-1]
+        return curr[-1]
