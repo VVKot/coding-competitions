@@ -1,10 +1,13 @@
-class Solution(object):
-    def maxProfit(self, prices):
+from typing import List
+from sys import maxsize as maxint
+
+
+class Solution:
+
+    def maxProfit(self, prices: List[int]) -> int:
         max_profit = 0
-        min_price = float('inf')
+        min_so_far = maxint
         for price in prices:
-            if price < min_price:
-                min_price = price
-            elif price - min_price > max_profit:
-                max_profit = price - min_price
+            min_so_far = min(min_so_far, price)
+            max_profit = max(max_profit, price - min_so_far)
         return max_profit
