@@ -12,15 +12,13 @@ class TreeNode:
 class Solution:
 
     def rightSideView(self, root: TreeNode) -> List[int]:
-        result = []  # type: List[int]
+        right_side_view = []  # type: List[int]
         stack = [(root, 1)]
         while stack:
-            curr, lvl = stack.pop()
+            curr, depth = stack.pop()
             if curr:
-                if lvl > len(result):
-                    result.append(curr.val)
-                if curr.left:
-                    stack.append((curr.left, lvl + 1))
-                if curr.right:
-                    stack.append((curr.right, lvl + 1))
-        return result
+                if len(right_side_view) < depth:
+                    right_side_view.append(curr.val)
+                stack.append((curr.left, depth+1))
+                stack.append((curr.right, depth+1))
+        return right_side_view
