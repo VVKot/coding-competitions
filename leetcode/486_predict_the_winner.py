@@ -5,11 +5,10 @@ class Solution:
 
     def PredictTheWinner(self, nums: List[int]) -> bool:
         N = len(nums)
-        dp = {(i, i): val for i, val in enumerate(nums)}
-        for size in range(2, N+1):
-            for left in range(N-size+1):
-                right = left + size - 1
-                with_begin = nums[left] - dp[(left+1, right)]
-                with_end = nums[right] - dp[(left, right-1)]
-                dp[(left, right)] = max(with_begin, with_end)
-        return dp[(0, N-1)] >= 0
+        dp = [0] * N
+        for start in range(N, -1, -1):
+            for end in range(start+1, N):
+                with_start = nums[start] - dp[end]
+                with_end = nums[end] - dp[end-1]
+                dp[end] = max(with_start, with_end)
+        return dp[-1] >= 0
