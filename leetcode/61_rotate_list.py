@@ -5,8 +5,9 @@ class ListNode(object):
 
 
 class Solution:
-    def rotateRight(self, head, k):
-        if not head:
+
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head or not k:
             return head
         ll_len = 1
         tail = head
@@ -15,9 +16,8 @@ class Solution:
             ll_len += 1
         tail.next = head
         k %= ll_len
-        if k:
-            for _ in range(ll_len-k):
-                tail = tail.next
+        for _ in range(ll_len-k):
+            tail = tail.next
         new_head = tail.next
         tail.next = None
         return new_head
