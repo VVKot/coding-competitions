@@ -7,13 +7,11 @@ class Solution:
         return [self.is_camel_match(query, pattern) for query in queries]
 
     def is_camel_match(self, query: str, pattern: str) -> bool:
-        Q = len(query)
         P = len(pattern)
-        i = j = 0
-        while i < Q and j < P:
-            if query[i] == pattern[j]:
+        j = 0
+        for ch in query:
+            if j < P and pattern[j] == ch:
                 j += 1
-            elif query[i].isupper():
+            elif ch.isupper():
                 return False
-            i += 1
-        return j >= P and (i >= Q or query[i:].islower())
+        return j == P
