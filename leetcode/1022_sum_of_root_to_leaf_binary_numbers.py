@@ -10,14 +10,15 @@ class Solution:
 
     def sumRootToLeaf(self, root: TreeNode) -> int:
         self.result = 0
-        self.process_all_paths(root, "")
+        self.process_all_paths(root, 0)
         return self.result
 
-    def process_all_paths(self, node: TreeNode, path: str) -> None:
+    def process_all_paths(self, node: TreeNode, total: int) -> None:
         if node:
-            path += str(node.val)
+            total *= 2
+            total += node.val
             if not node.right and not node.left:
-                self.result += int(path, 2)
+                self.result += total
             else:
-                self.process_all_paths(node.left, path)
-                self.process_all_paths(node.right, path)
+                self.process_all_paths(node.left, total)
+                self.process_all_paths(node.right, total)
