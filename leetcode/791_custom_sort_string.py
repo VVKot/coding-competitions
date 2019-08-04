@@ -1,14 +1,18 @@
 import collections
-import string
 
 
 class Solution:
 
     def customSortString(self, S: str, T: str) -> str:
-        letter_count = collections.Counter(T)
-        other_letters = set(string.ascii_lowercase) - set(S)
-        order = S + ''.join(other_letters)
+        if not T or not S:
+            return T
         result = []
-        for letter in order:
-            result.extend([letter * letter_count[letter]])
-        return ''.join(result)
+        chars_count = collections.Counter(T)
+        for ch in S:
+            for _ in range(chars_count[ch]):
+                result.append(ch)
+            del chars_count[ch]
+        for ch, count in chars_count.items():
+            for _ in range(count):
+                result.append(ch)
+        return "".join(result)
