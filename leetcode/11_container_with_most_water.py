@@ -8,10 +8,12 @@ class Solution:
         left = 0
         right = len(height) - 1
         while left < right:
-            min_height = min(height[left], height[right])
-            curr_area = min_height * (right - left)
-            area = max(area, curr_area)
-            if height[left] < height[right]:
+            left_bar = height[left]
+            right_bar = height[right]
+            height = min(left_bar, right_bar)
+            width = right - left
+            area = max(area, height*width)
+            if left_bar < right_bar:
                 left += 1
             else:
                 right -= 1
