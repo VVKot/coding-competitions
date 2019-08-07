@@ -11,13 +11,11 @@ class Solution:
     def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
         if not s:
             return False
-        return self.is_equal(s, t) or self.isSubtree(s.left, t) or \
-            self.isSubtree(s.right, t)
+        return self.is_strict_subtree(s, t) or self.isSubtree(s.left, t) \
+            or self.isSubtree(s.right, t)
 
-    def is_equal(self, s: TreeNode, t: TreeNode) -> bool:
-        if not s and not t:
-            return True
+    def is_strict_subtree(self, s: TreeNode, t: TreeNode) -> bool:
         if not s or not t:
-            return False
-        return s.val == t.val and self.is_equal(s.left, t.left) and \
-            self.is_equal(s.right, t.right)
+            return not s and not t
+        return s.val == t.val and self.is_strict_subtree(s.left, t.left) \
+            and self.is_strict_subtree(s.right, t.right)
