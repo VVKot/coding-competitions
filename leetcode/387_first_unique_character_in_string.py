@@ -1,18 +1,17 @@
 import collections
-from typing import Dict, List
+from typing import Counter
 
 
 class Solution:
 
     def firstUniqChar(self, s: str) -> int:
-        ordered_chars_count = \
-            collections.OrderedDict()  # type: Dict[str, List[int, int]]
+        char_positions = {}
+        char_count = collections.Counter()  # type: Counter[str]
         for i, char in enumerate(s):
-            if char in ordered_chars_count:
-                ordered_chars_count[char][1] += 1
-            else:
-                ordered_chars_count[char] = [i, 1]
-        for first_occ, count in ordered_chars_count.values():
+            char_count[char] += 1
+            if char_count[char] == 1:
+                char_positions[char] = i
+        for char, count in char_count.items():
             if count == 1:
-                return first_occ
+                return char_positions[char]
         return -1
