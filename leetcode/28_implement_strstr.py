@@ -1,14 +1,45 @@
+from typing import List
+
+
 class Solution:
 
     def strStr(self, haystack: str, needle: str) -> int:
         if not needle:
             return 0
-        H = len(haystack)
-        N = len(needle)
-        for i in range(H-N+1):
-            for j in range(i, i+N):
-                if haystack[j] != needle[j-i]:
-                    break
+        suffix_prefix = self._get_kmp_table(needle)
+        H, N = len(haystack), len(needle)
+        i = j = 0
+        while i < H and j < N:
+            if haystack[i] == needle[j]:
+                j += 1
+                i += 1
             else:
-                return i
-        return -1
+                if j:
+                    j = suffix_prefix[j-1]
+                else:
+                    i += 1
+        return i - j if j == N else -1
+
+    def _get_kmp_table(self, needle: str) -> List[int]:
+        N = len(needle)
+        kmp = [0] * N
+        j = 0
+        i = 1
+        while i < N:
+            if needle[i] == needle[j]:
+                j += 1
+                kmp[i] = j
+                i += 1
+            else:
+                if j == 0:
+                    i += 1
+                else:
+                    j = kmp[j-1]
+        return kmp
+
+
+s = Solution()
+assert s.strStr("aabaaabaaac", "aabaaac") == 4
+assert s.strStr("hello", "ll") == 2
+assert s.strStr("aaaaa", "bba") == -1
+assert s.strStr("mississippi", "issip") == 4
