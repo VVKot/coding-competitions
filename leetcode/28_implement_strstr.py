@@ -36,10 +36,3 @@ class Solution:
                 else:
                     j = kmp[j-1]
         return kmp
-
-
-s = Solution()
-assert s.strStr("aabaaabaaac", "aabaaac") == 4
-assert s.strStr("hello", "ll") == 2
-assert s.strStr("aaaaa", "bba") == -1
-assert s.strStr("mississippi", "issip") == 4
