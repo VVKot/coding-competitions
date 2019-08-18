@@ -12,7 +12,7 @@ class Solution:
 
     def maxLevelSum(self, root: TreeNode) -> int:
         q = collections.deque([(root, 1)])
-        curr_level = best_level = 1 
+        curr_level = best_level = 1
         best_sum = curr_sum = 0
         while q:
             curr, level = q.pop()
