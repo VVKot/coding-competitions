@@ -1,26 +1,20 @@
-import math
 from typing import List
 
 
 class Solution:
 
     def maxDepthAfterSplit(self, seq: str) -> List[int]:
-        max_depth = self.get_max_depth(seq)
-        max_allowed_depth = math.ceil(max_depth) // 2
+        half_depth = self.get_max_depth(seq) // 2
         depth = 0
-        split = []
-        for ch in seq:
+        split = [0] * len(seq)
+        for i, ch in enumerate(seq):
             if ch == '(':
                 depth += 1
-                if depth <= max_allowed_depth:
-                    split.append(1)
-                else:
-                    split.append(0)
+                if depth > half_depth:
+                    split[i] = 1
             else:
-                if depth <= max_allowed_depth:
-                    split.append(1)
-                else:
-                    split.append(0)
+                if depth > half_depth:
+                    split[i] = 1
                 depth -= 1
         return split
 
