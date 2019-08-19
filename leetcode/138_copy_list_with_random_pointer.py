@@ -11,22 +11,23 @@ class Solution:
     def copyRandomList(self, head: Node) -> Node:
         if not head:
             return head
-        curr = head
-        # duplicate
-        while curr:
-            new = Node(curr.val, curr.next, None)
-            curr.next, curr = new, curr.next
-        curr = head
-        # copy random
-        while curr:
-            if curr.random:
-                curr.next.random = curr.random.next
-            curr = curr.next.next
-        curr, new_head, prev = head, head.next, None
-        # restore
-        while curr and curr.next:
-            if prev:
-                prev.next = curr.next
-            prev = curr.next
-            curr.next, curr = curr.next.next, curr.next.next
+        self.add_copies(head)
+        self.create_random_links(head)
+        new_head = head.next
+        self.separate_lists(head)
         return new_head
+
+    def add_copies(self, head: Node) -> None:
+        while head:
+            copied = Node(head.val, head.next, None)
+            head.next, head = copied, head.next
+
+    def create_random_links(self, head: Node) -> None:
+        while head:
+            if head.random:
+                head.next.random = head.random.next
+            head = head.next.next
+
+    def separate_lists(self, head: Node) -> None:
+        while head and head.next:
+            head.next, head = head.next.next, head.next
