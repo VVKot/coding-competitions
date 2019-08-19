@@ -1,4 +1,3 @@
-from sys import maxsize as maxint
 from typing import List
 
 
@@ -16,21 +15,14 @@ class Solution:
         forest = []
         nodes_to_delete = set(to_delete)
 
-        def delete_nodes(node):
+        def delete_nodes(node, is_root):
             if node:
-                node.left = delete_nodes(node.left)
-                node.right = delete_nodes(node.right)
-                if node.val in nodes_to_delete:
-                    if node.left:
-                        forest.append(node.left)
-                    if node.right:
-                        forest.append(node.right)
-                    return None
-                else:
-                    return node
+                is_deleted = node.val in nodes_to_delete
+                if not is_deleted and is_root:
+                    forest.append(node)
+                node.left = delete_nodes(node.left, is_deleted)
+                node.right = delete_nodes(node.right, is_deleted)
+                return None if is_deleted else node
 
-        dummy = TreeNode(maxint)
-        dummy.left = root
-        nodes_to_delete.add(dummy.val)
-        delete_nodes(dummy)
+        delete_nodes(root, True)
         return forest
