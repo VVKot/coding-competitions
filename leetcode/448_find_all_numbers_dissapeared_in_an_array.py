@@ -4,5 +4,13 @@ from typing import List
 class Solution:
 
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
-        present_nums = set(nums)
-        return [i for i in range(1, len(nums)+1) if i not in present_nums]
+        i, N = 0, len(nums)
+        while i < N:
+            while nums[i] != nums[nums[i]-1]:
+                nums[nums[i]-1], nums[i] = nums[i], nums[nums[i]-1]
+            i += 1
+        dissapeared_nums = []
+        for i, num in enumerate(nums):
+            if num != i+1:
+                dissapeared_nums.append(i+1)
+        return dissapeared_nums
