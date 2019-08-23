@@ -1,19 +1,16 @@
-import collections
-from typing import Counter, List
+import heapq
+from typing import List
 
 
 class Solution:
 
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
-        total_room_count = 0
         if not intervals:
-            return total_room_count
-        room_deltas = collections.Counter()  # type: Counter[int]
+            return 0
+        intervals.sort()
+        meeting_ends = []  # type: List[int]
         for start, end in intervals:
-            room_deltas[start] += 1
-            room_deltas[end] -= 1
-        running_total = 0
-        for timestamp in sorted(room_deltas):
-            total_room_count = max(total_room_count, running_total)
-            running_total += room_deltas[timestamp]
-        return total_room_count
+            if meeting_ends and meeting_ends[0] <= start:
+                heapq.heappop(meeting_ends)
+            heapq.heappush(meeting_ends, end)
+        return len(meeting_ends)
