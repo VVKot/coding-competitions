@@ -1,4 +1,5 @@
-from typing import List
+import collections
+from typing import Dict
 
 
 class ListNode:
@@ -11,43 +12,15 @@ class ListNode:
 class Solution:
 
     def removeZeroSumSublists(self, head: ListNode) -> ListNode:
-        nodes = self._get_list(head)
-        removed = self._get_removed_nodes(nodes)
-        return self._get_linked_list(nodes, removed)
-
-    def _get_list(self, head: ListNode) -> List[int]:
-        nodes = []
-        while head:
-            nodes.append(head.val)
-            head = head.next
-        return nodes
-
-    def _get_removed_nodes(self, nodes: List[int]) -> List[bool]:
-        N = len(nodes)
-        removed = [False] * N
-        for i in range(N):
-            if removed[i]:
-                continue
-            j = i
-            curr_sum = 0
-            while j < N:
-                if not removed[j]:
-                    curr_sum += nodes[j]
-                j += 1
-                if curr_sum == 0:
-                    break
-            if curr_sum == 0:
-                for k in range(i, min(N, j)):
-                    removed[k] = True
-        return removed
-
-    def _get_linked_list(self,
-                         nodes: List[int],
-                         removed: List[bool]) -> ListNode:
-        dummy = curr = ListNode(-1)
-        for val, remd in zip(nodes, removed):
-            if not remd:
-                node = ListNode(val)
-                curr.next = node
-                curr = curr.next
+        curr = dummy = ListNode(0)
+        dummy.next = head
+        prefix_sum = 0
+        seen = collections.OrderedDict()  # type: Dict[int, ListNode]
+        while curr:
+            prefix_sum += curr.val
+            node = seen.get(prefix_sum, curr)
+            while prefix_sum in seen:
+                seen.popitem()
+            seen[prefix_sum] = node
+            node.next, curr = curr.next, curr.next
         return dummy.next
