@@ -1,4 +1,3 @@
-import collections
 from typing import Dict
 
 
@@ -15,7 +14,7 @@ class Solution:
         curr = dummy = ListNode(0)
         dummy.next = head
         prefix_sum = 0
-        seen = collections.OrderedDict()  # type: Dict[int, ListNode]
+        seen = {}  # type: Dict[int, ListNode]
         while curr:
             prefix_sum += curr.val
             node = seen.get(prefix_sum, curr)
