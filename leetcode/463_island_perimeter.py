@@ -1,43 +1,30 @@
-class Solution(object):
+from typing import List
 
-    def is_land(self, grid, y, x):
+
+class Solution:
+
+    WATER, LAND = range(2)
+
+    def islandPerimeter(self, grid: List[List[int]]) -> int:
+        perimeter = 0
+        if not any(grid):
+            return perimeter
         rows = len(grid)
         cols = len(grid[0])
-        return 0 <= y < rows and 0 <= x < cols and grid[y][x]
 
-    def get_nearest(self, y, x):
-        return [(y-1, x), (y+1, x), (y, x-1), (y, x+1)]
+        def get_cell_perimeter(y, x):
+            perimeter = 0
+            for dy, dx in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+                yy, xx = dy+y, dx+x
+                if 0 <= yy < rows and 0 <= xx < cols:
+                    if grid[yy][xx] == self.WATER:
+                        perimeter += 1
+                else:
+                    perimeter += 1
+            return perimeter
 
-    def get_perimeter(self, grid, start):
-        stack = [start]
-        visited = set(stack)
-        result = 0
-        while stack:
-            y, x = stack.pop()
-            nearest = self.get_nearest(y, x)
-            near = 0
-            for r, c in nearest:
-                if not self.is_land(grid, r, c):
-                    continue
-                near += 1
-                if (r, c) in visited:
-                        continue
-                visited.add((r,c))
-                stack.append((r,c))
-            result += 4 - near
-        return result
-
-    def islandPerimeter(self, grid):
-        result = 0
-        if not any(grid):
-            return result
-        start = None
-        for i, row in enumerate(grid):
-            for j, num in enumerate(row):
-                if num:
-                    start = (i, j)
-                    break
-            if start:
-                break
-        result = self.get_perimeter(grid, start)
-        return result
+        for y, row in enumerate(grid):
+            for x, val in enumerate(row):
+                if val == self.LAND:
+                    perimeter += get_cell_perimeter(y, x)
+        return perimeter
