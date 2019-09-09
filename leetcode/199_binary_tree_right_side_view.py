@@ -1,3 +1,4 @@
+import collections
 from typing import List
 
 
@@ -13,12 +14,17 @@ class Solution:
 
     def rightSideView(self, root: TreeNode) -> List[int]:
         right_side_view = []  # type: List[int]
-        stack = [(root, 1)]
-        while stack:
-            curr, depth = stack.pop()
-            if curr:
-                if len(right_side_view) < depth:
-                    right_side_view.append(curr.val)
-                stack.append((curr.left, depth+1))
-                stack.append((curr.right, depth+1))
+        if not root:
+            return right_side_view
+        queue = collections.deque([root])
+        while queue:
+            curr_len = len(queue)
+            for i in range(curr_len):
+                node = queue.popleft()
+                if i == 0:
+                    right_side_view.append(node.val)
+                if node.right:
+                    queue.append(node.right)
+                if node.left:
+                    queue.append(node.left)
         return right_side_view
