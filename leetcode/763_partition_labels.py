@@ -4,12 +4,12 @@ from typing import List
 class Solution:
 
     def partitionLabels(self, S: str) -> List[int]:
-        result = []
-        last = {ch: i for i, ch in enumerate(S)}
-        start = j = 0
+        last_occurences = {ch: i for i, ch in enumerate(S)}
+        partitions = []
+        start = end = 0
         for i, ch in enumerate(S):
-            j = max(j, last[ch])
-            if i == j:
-                result.append(i-start+1)
-                start = i + 1
-        return result
+            end = max(end, last_occurences[ch])
+            if i == end:
+                partitions.append(end-start+1)
+                start = i+1
+        return partitions
