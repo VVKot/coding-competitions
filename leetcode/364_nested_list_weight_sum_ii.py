@@ -30,16 +30,11 @@ class NestedInteger:
 class Solution:
 
     def depthSumInverse(self, nestedList: List[NestedInteger]) -> int:
-        depth = 0
-        temp = nestedList[:]
-        while temp:
-            temp = sum([x.getList() for x in temp if not x.isInteger()], [])
-            depth += 1
-        result = 0
+        unweighted = weighted = 0
         while nestedList:
-            result += depth * sum([x.getInteger() for x in nestedList
-                                   if x.isInteger()])
+            unweighted += sum([x.getInteger() for x in nestedList
+                               if x.isInteger()])
             nestedList = sum([x.getList() for x in nestedList
                               if not x.isInteger()], [])
-            depth -= 1
-        return result
+            weighted += unweighted
+        return weighted
