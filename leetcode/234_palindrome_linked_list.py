@@ -5,16 +5,16 @@ class ListNode:
 
 
 class Solution:
-    def isPalindrome(self, head):
-        reverse = None
-        slow = fast = head
-        while fast and fast.next:
-            fast = fast.next.next
-            reverse, reverse.next, slow = slow, reverse, slow.next
-        # list is of odd length
-        if fast:
-            slow = slow.next
-        while reverse and reverse.val == slow.val:
-            slow = slow.next
-            reverse = reverse.next
-        return not reverse
+
+    def isPalindrome(self, head: ListNode) -> bool:
+        list_representation = []
+        while head:
+            list_representation.append(head.val)
+            head = head.next
+        left, right = 0, len(list_representation)-1
+        while left < right:
+            if list_representation[left] != list_representation[right]:
+                return False
+            left += 1
+            right -= 1
+        return True
