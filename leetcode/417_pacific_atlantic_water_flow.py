@@ -10,8 +10,8 @@ class Solution:
         self.rows = len(matrix)
         self.cols = len(matrix[0])
         pacific, atlantic = self.get_initial_oceans()
-        pacific = self.expand_ocean(pacific)
-        atlantic = self.expand_ocean(atlantic)
+        self.expand_ocean(pacific)
+        self.expand_ocean(atlantic)
         return list(map(list, pacific & atlantic))
 
     def get_initial_oceans(self) -> List[Set[Tuple[int, int]]]:
@@ -25,19 +25,16 @@ class Solution:
             atlantic.add((self.rows-1, x))
         return [pacific, atlantic]
 
-    def expand_ocean(self,
-                     ocean: Set[Tuple[int, int]]) -> Set[Tuple[int, int]]:
+    def expand_ocean(self, ocean: Set[Tuple[int, int]]) -> None:
         stack = list(ocean)
-        ocean = set()
         while stack:
-            coordinates = stack.pop()
-            if coordinates not in ocean:
-                ocean.add(coordinates)
-                y, x = coordinates
-                stack.extend(self.get_higher_neighbors(y, x))
-        return ocean
+            y, x = stack.pop()
+            for neighbor in self.get_higher_neighbors(y, x):
+                if neighbor not in ocean:
+                    ocean.add(neighbor)
+                    stack.append(neighbor)
 
-    def get_higher_neighbors(self, y, x):
+    def get_higher_neighbors(self, y, x) -> List[Tuple[int, int]]:
         lower_neighbors = []
         for dy, dx in ((0, 1), (0, -1), (1, 0), (-1, 0)):
             curr_y, curr_x = y+dy, x+dx
