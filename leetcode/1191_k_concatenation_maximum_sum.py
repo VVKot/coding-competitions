@@ -8,11 +8,11 @@ class Solution:
     def kConcatenationMaxSum(self, arr: List[int], k: int) -> int:
         max_subarray_sum = self._get_max_subarray_sum(arr)
         array_sum = sum(arr)
-        total_concatendated_sum = array_sum * k
         if k == 1:
             return max(max_subarray_sum,
-                       total_concatendated_sum) % self.MAX_SUM
+                       array_sum) % self.MAX_SUM
 
+        total_concatendated_sum = array_sum * k
         max_overlapped_subarray_sum = self._get_max_subarray_sum(arr + arr)
         max_overlapped_subarray_sum += max(0, array_sum * (k-2))
 
