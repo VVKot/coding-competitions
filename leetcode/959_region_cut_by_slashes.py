@@ -1,69 +1,60 @@
 from typing import List
 
 
+class DSU:
+
+    def __init__(self, N: int):
+        self.parents = list(range(N))
+        self.ranks = [0] * N
+
+    def find(self, node: int) -> int:
+        if node == self.parents[node]:
+            return node
+        return self.find(self.parents[node])
+
+    def union(self, n1: int, n2: int) -> None:
+        p1, p2 = map(self.find, (n1, n2))
+        rank1, rank2 = map(self.ranks.__getitem__, (p1, p2))
+        if rank1 >= rank2:
+            if rank1 == rank2:
+                rank1 += 1
+            self.parents[p2] = p1
+        else:
+            self.parents[p1] = p2
+
+
 class Solution:
 
     def regionsBySlashes(self, grid: List[str]) -> int:
-        self.grid = grid
-        parents = self.get_node_parents()
-
-        def find(node):
-            if parents[node] == node:
-                return node
-            else:
-                return find(parents[node])
-
-        def union(n1, n2):
-            p1, p2 = find(n1), find(n2)
-            parents[p1] = p2  # TODO - add union by rank
-
+        N = len(grid)
+        subsquare_count = N*N*4
+        dsu = DSU(subsquare_count)
+        rows = len(grid)
+        cols = len(grid[0])
         for y, row in enumerate(grid):
             for x, val in enumerate(row):
-                first = second = None
-                if val == ' ':
-                    first, second = self.get_regions(y, x)
-                elif val == '/':
-                    first, _ = self.get_regions(y, x)
-                    second = first
-                else:
-                    first, second = self.get_regions(y, x)
-                if x != 0:
-                    left = self.get_left(y, x)
-                    union(first, left)
-                if y != 0:
-                    top = self.get_top(y, x)
-                    union(second, top)
-        return len(set(find(p) for p in parents))
+                curr_top = 4 * (y*N + x)
+                curr_left = curr_top + 1
+                curr_right = curr_top + 2
+                curr_bottom = curr_top + 3
+                if val in '/ ':
+                    dsu.union(curr_top, curr_left)
+                    dsu.union(curr_right, curr_bottom)
+                if val in '\ ':
+                    dsu.union(curr_top, curr_right)
+                    dsu.union(curr_left, curr_bottom)
 
-    def get_regions(self, y, x):
-        first_mark, second_mark = 0, 1
-        val = self.grid[y][x]
-        if val == ' ':
-            return (y, x, first_mark), (y, x, first_mark)
-        else:
-            return (y, x, first_mark), (y, x, second_mark)
+                if y > 0:
+                    bottom_of_the_top_node = (curr_top - 4*N) + 3
+                    dsu.union(curr_top, bottom_of_the_top_node)
+                if y < rows-1:
+                    top_of_the_bottom_node = (curr_top + 4*N)
+                    dsu.union(curr_bottom, top_of_the_bottom_node)
+                if x > 0:
+                    right_of_the_left_node = (curr_top - 4) + 2
+                    dsu.union(curr_left, right_of_the_left_node)
+                if x < cols-1:
+                    left_of_the_right_node = (curr_top + 4) + 1
+                    dsu.union(curr_right, left_of_the_right_node)
 
-    def get_left(self, y, x):
-        val = self.grid[y][x-1]
-        if val == ' ':
-            return self.get_regions(y, x-1)[0]
-        else:
-            return self.get_regions(y, x-1)[1]
-
-    def get_top(self, y, x):
-        val = self.grid[y-1][x]
-        if val == ' ':
-            return self.get_regions(y-1, x)[0]
-        elif val == '/':
-            return self.get_regions(y-1, x)[1]
-        else:
-            return self.get_regions(y-1, x)[0]
-
-    def get_node_parents(self):
-        parents = {}
-        for y, row in enumerate(self.grid):
-            for x, val in enumerate(row):
-                first, second = self.get_regions(y, x)
-                parents[first] = first
-                parents[second] = second
-        return parents
+        return sum(dsu.find(node) == node for node in range(subsquare_count))
