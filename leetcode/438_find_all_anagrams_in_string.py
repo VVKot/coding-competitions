@@ -1,23 +1,20 @@
 from collections import Counter
+from typing import List
 
 
 class Solution(object):
-    def findAnagrams(self, s, p):
-        """
-        :type s: str
-        :type p: str
-        :rtype: List[int]
-        """
+
+    def findAnagrams(self, s: str, p: str) -> List[int]:
         result = []
-        len_one_short = len(p) - 1
+        pattern_len = len(p)
         p_counter = Counter(p)
-        s_counter = Counter(s[:len_one_short])
-        for i in range(len_one_short, len(s)):
-            s_counter[s[i]] += 1
-            seq_start_idx = i - len_one_short
+        s_counter = Counter(s[:pattern_len-1])
+        for i in range(len(s)-pattern_len+1):
+            next_char = i + pattern_len - 1
+            s_counter[s[next_char]] += 1
             if s_counter == p_counter:
-                result.append(seq_start_idx)
-            s_counter[s[seq_start_idx]] -= 1
-            if s_counter[s[seq_start_idx]] == 0:
-                del s_counter[s[seq_start_idx]]
+                result.append(i)
+            s_counter[s[i]] -= 1
+            if s_counter[s[i]] == 0:
+                del s_counter[s[i]]
         return result
