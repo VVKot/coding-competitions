@@ -18,7 +18,7 @@ class Solution:
         left, right = 0, 2 ** depth - 1
         while left <= right:
             mid = (left+right) // 2
-            at_mid = self.get_leaf_by_index(root, depth, mid)
+            at_mid = self.is_leaf_exists(root, depth, mid)
             if at_mid:
                 last_node_index = mid
                 left = mid+1
@@ -33,15 +33,17 @@ class Solution:
             root = root.left
         return depth
 
-    def get_leaf_by_index(self,
-                          root: TreeNode,
-                          depth: int,
-                          index: int) -> TreeNode:
-        path_template = '0{}b'.format(depth)
-        path = format(index, path_template)
-        for direction in path:
-            if direction == '0':
+    def is_leaf_exists(self,
+                       root: TreeNode,
+                       depth: int,
+                       index: int) -> bool:
+        left, right = 0, 2 ** depth - 1
+        for _ in range(depth):
+            mid = (left+right) // 2
+            if index <= mid:
                 root = root.left
+                right = mid
             else:
                 root = root.right
-        return root
+                left = mid+1
+        return root is not None
