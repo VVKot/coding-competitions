@@ -1,32 +1,19 @@
-import collections
 from typing import List
 
 
 class Solution:
 
     def longestConsecutive(self, nums: List[int]) -> int:
+        longest_seq_len = 0
         if not nums:
-            return 0
-        parents = {num: num for num in nums}
-        ranks = {num: 1 for num in nums}
-
-        def find(num):
-            return num if parents[num] == num else find(parents[num])
-
-        def union(num1, num2):
-            parent1, parent2 = find(num1), find(num2)
-            rank1, rank2 = ranks[parent1], ranks[parent2]
-            if rank1 >= rank2:
-                if rank1 == rank2:
-                    ranks[parent1] += 1
-                parents[parent2] = parent1
-            else:
-                parents[parent1] = parent2
-
+            return longest_seq_len
+        available_nums = set(nums)
         for num in nums:
-            if num-1 in parents:
-                union(num, num-1)
-            if num+1 in nums:
-                union(num, num+1)
-        return max(collections.Counter([find(p) for p in parents]).values())
-ƒ
+            if num-1 not in available_nums:
+                curr_seq_len = 1
+                curr = num
+                while curr+1 in available_nums:
+                    curr += 1
+                    curr_seq_len += 1
+                longest_seq_len = max(longest_seq_len, curr_seq_len)
+        return longest_seq_len
