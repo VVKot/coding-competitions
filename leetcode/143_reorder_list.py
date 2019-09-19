@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class ListNode:
 
     def __init__(self, x):
@@ -10,15 +13,23 @@ class Solution:
     def reorderList(self, head: ListNode) -> None:
         if not head:
             return
+        mid = self.get_mid(head)
+        after_mid = mid.next
+        mid.next = None
+        tail = self.reverse_list(after_mid)
+        while head and tail:
+            head.next, head = tail, head.next
+            tail.next, tail = head, tail.next
+
+    def get_mid(self, head: ListNode) -> ListNode:
         fast = slow = head
         while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
-        after_mid = slow.next
-        slow.next = None
+        return slow
+
+    def reverse_list(self, head: Optional[ListNode]) -> Optional[ListNode]:
         prev = None
-        while after_mid:
-            after_mid.next, after_mid, prev = prev, after_mid.next, after_mid
-        while head and prev:
-            head.next, head = prev, head.next
-            prev.next, prev = head, prev.next
+        while head:
+            head.next, head, prev = prev, head.next, head
+        return prev
