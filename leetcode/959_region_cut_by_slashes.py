@@ -8,9 +8,10 @@ class DSU:
         self.ranks = [0] * N
 
     def find(self, node: int) -> int:
-        if node == self.parents[node]:
+        if self.parents[node] == node:
             return node
-        return self.find(self.parents[node])
+        self.parents[node] = self.find(self.parents[node])
+        return self.parents[node]
 
     def union(self, n1: int, n2: int) -> None:
         p1, p2 = map(self.find, (n1, n2))
