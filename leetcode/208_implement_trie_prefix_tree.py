@@ -1,41 +1,30 @@
 class Trie:
 
+    WORD_MARK = '*'
+
     def __init__(self):
-        """
-        Initialize your data structure here.
-        """
-        self.end = "*"
-        self.trie = dict()
+        self.trie = {}
 
-    def insert(self, word):
-        """
-        Inserts a word into the trie.
-        """
-        temp_trie = self.trie
-        for letter in word:
-            temp_trie = temp_trie.setdefault(letter, {})
-        temp_trie[self.end] = self.end
+    def insert(self, word: str) -> None:
+        trie = self.trie
+        for ch in word:
+            trie = trie.setdefault(ch, {})
+        trie[self.WORD_MARK] = self.WORD_MARK
 
-    def search(self, word):
-        """
-        Returns if the word is in the trie.
-        """
-        temp_trie = self.trie
-        for letter in word:
-            if letter in temp_trie:
-                temp_trie = temp_trie[letter]
+    def search(self, word: str) -> bool:
+        trie = self.trie
+        for ch in word:
+            if ch in trie:
+                trie = trie[ch]
             else:
                 return False
-        return self.end in temp_trie
+        return self.WORD_MARK in trie
 
-    def startsWith(self, prefix):
-        """
-        Returns if there is any word in the trie that starts with the given prefix.
-        """
-        temp_trie = self.trie
-        for letter in prefix:
-            if letter in temp_trie:
-                temp_trie = temp_trie[letter]
+    def startsWith(self, prefix: str) -> bool:
+        trie = self.trie
+        for ch in prefix:
+            if ch in trie:
+                trie = trie[ch]
             else:
                 return False
-        return True
+        return bool(trie)
