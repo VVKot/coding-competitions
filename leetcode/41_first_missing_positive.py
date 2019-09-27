@@ -6,13 +6,14 @@ class Solution:
     def firstMissingPositive(self, nums: List[int]) -> int:
         if not nums:
             return 1
+
         N = len(nums)
         for i in range(N):
-            while 1 <= nums[i] <= N:
-                correct_idx = nums[i] - 1
-                if nums[correct_idx] == nums[i]:
+            while 1 <= nums[i] < N:
+                should_be_at = nums[i]-1
+                if nums[should_be_at] == nums[i]:
                     break
-                nums[correct_idx], nums[i] = nums[i], nums[correct_idx]
+                nums[i], nums[should_be_at] = nums[should_be_at], nums[i]
 
         for i, num in enumerate(nums):
             if num != i+1:
