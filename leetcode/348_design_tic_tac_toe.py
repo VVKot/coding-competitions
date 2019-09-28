@@ -2,10 +2,10 @@ class TicTacToe:
 
     def __init__(self, n: int):
         self.n = n
-        self.rows = [[0, 0] for _ in range(n)]
-        self.cols = [[0, 0] for _ in range(n)]
-        self.main_diagonal = [0, 0]
-        self.off_diagonal = [0, 0]
+        self.rows = [0] * n
+        self.cols = [0] * n
+        self.main_diagonal = 0
+        self.off_diagonal = 0
 
     def move(self, row: int, col: int, player: int) -> int:
         self.make_move(row, col, player)
@@ -14,19 +14,19 @@ class TicTacToe:
         return 0
 
     def make_move(self, row: int, col: int, player: int) -> None:
-        index = player-1
-        self.rows[row][index] += 1
-        self.cols[col][index] += 1
+        diff = 1 if player == 1 else -1
+        self.rows[row] += diff
+        self.cols[col] += diff
         if row == col:
-            self.main_diagonal[index] += 1
+            self.main_diagonal += diff
         if row+col+1 == self.n:
-            self.off_diagonal[index] += 1
+            self.off_diagonal += diff
 
     def has_won(self, row: int, col: int, player: int) -> bool:
-        index = player-1
-        lines_count = [self.rows[row][index], self.cols[col][index]]
+        total = self.n if player == 1 else -self.n
+        counts = [self.rows[row], self.cols[col]]
         if row == col:
-            lines_count.append(self.main_diagonal[index])
+            counts.append(self.main_diagonal)
         if row+col+1 == self.n:
-            lines_count.append(self.off_diagonal[index])
-        return any(count == self.n for count in lines_count)
+            counts.append(self.off_diagonal)
+        return any(c == total for c in counts)
