@@ -1,5 +1,4 @@
 from typing import List
-from sys import maxsize as maxint
 
 
 class Solution:
@@ -11,7 +10,7 @@ class Solution:
                     squirrel: List[int],
                     nuts: List[List[int]]) -> int:
         total_distance = 0
-        max_saved = -maxint-1
+        max_saved = -height * width
         for nut in nuts:
             tree_distance = self.get_distance(tree, nut)
             total_distance += tree_distance
