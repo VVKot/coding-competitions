@@ -18,15 +18,15 @@ class Solution:
                      z: int) -> List[List[int]]:
         x = 1000
         y = 1
-        ans = []
+        result = []
         while 1 <= x <= 1000 and 1 <= y <= 1000:
-            z0 = customfunction.f(x, y)
-            if z0 == z:
-                ans.append([x, y])
+            curr_value = customfunction.f(x, y)
+            if curr_value == z:
+                result.append([x, y])
                 x -= 1
                 y += 1
-            elif z0 > z:
+            elif curr_value > z:
                 x -= 1
-            elif z0 < z:
+            elif curr_value < z:
                 y += 1
-        return ans
+        return result
