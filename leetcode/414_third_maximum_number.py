@@ -5,7 +5,7 @@ from typing import List
 class Solution:
 
     def thirdMax(self, nums: List[int]) -> int:
-        max_nums = []
+        max_nums = []  # type: List[int]
         for num in set(nums):
             if len(max_nums) < 3:
                 heapq.heappush(max_nums, num)
