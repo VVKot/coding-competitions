@@ -1,8 +1,10 @@
 """
-T: O(N*M + (N+M)*L)
-S: O(N*M)
+T: O(N + M + L)
+S: O(N + M)
 
-A simple simulation solution which follows instructions.
+Calculate the oddness of each row and column.
+After that, sum all of the odd columns if the row is even,
+sum even columns otherwise.
 """
 
 
@@ -12,10 +14,10 @@ from typing import List
 class Solution:
 
     def oddCells(self, n: int, m: int, indices: List[List[int]]) -> int:
-        cells = [[0 for _ in range(m)] for _ in range(n)]
-        for i, j in indices:
-            for x in range(m):
-                cells[i][x] ^= 1
-            for y in range(n):
-                cells[y][j] ^= 1
-        return sum(val for row in cells for val in row)
+        rows = [0] * n
+        cols = [0] * m
+        for y, x in indices:
+            rows[y] ^= 1
+            cols[x] ^= 1
+        col_sum = sum(cols)
+        return sum(col_sum if not r else m-col_sum for r in rows)
