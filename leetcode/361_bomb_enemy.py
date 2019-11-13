@@ -1,9 +1,10 @@
 """
-T: O(M*N)
-S: O(M*N)
+T: O(R*C)
+S: O(C)
 
-Count the number of killed in enemies for each row and column.
-The maximum of those counts is the final result.
+For the first entry in each row and column count the number of hits.
+Do the same if the previous cell contains a wall.
+After that, on each step update the result.
 """
 
 
@@ -18,33 +19,23 @@ class Solution:
         if not grid or not any(grid):
             return 0
         R, C = len(grid), len(grid[0])
-        # self.get_default_killed_count(grid)
-        killed_count = [[0 for _ in range(C)] for _ in range(R)]
-        for y in range(R):
-            curr_killed = 0
-            prev = 0
-            for x in range(C):
-                if x == C-1 or grid[y][x] == self.WALL:
-                    last = x if x == C-1 else x-1
-                    for i in range(prev, last+1):
-                        if grid[y][i] == self.EMPTY:
-                            killed_count[y][i] += curr_killed
-                    curr_killed = 0
-                    prev = x+1
-                elif grid[y][x] == self.ENEMY:
-                    curr_killed += 1
-
-        for x in range(C):
-            curr_killed = 0
-            prev = 0
-            for y in range(R):
-                if grid[y][x] == self.ENEMY:
-                    curr_killed += 1
-                if y == R-1 or grid[y][x] == self.WALL:
-                    last = y if y == R-1 else x-1
-                    for i in range(prev, last+1):
-                        if grid[i][x] == self.EMPTY:
-                            killed_count[i][x] += curr_killed
-                    curr_killed = 0
-                    prev = y+1
-        return max(val for row in killed_count for val in row)
+        result, row_hits, col_hits = 0, 0, [0] * C
+        for y, row in enumerate(grid):
+            for x, val in enumerate(row):
+                if not x or grid[y][x-1] == self.WALL:
+                    row_hits = 0
+                    for k in range(x, C):
+                        if grid[y][k] == self.WALL:
+                            break
+                        if grid[y][k] == self.ENEMY:
+                            row_hits += 1
+                if not y or grid[y-1][x] == self.WALL:
+                    col_hits[x] = 0
+                    for k in range(y, R):
+                        if grid[k][x] == self.WALL:
+                            break
+                        if grid[k][x] == self.ENEMY:
+                            col_hits[x] += 1
+                if val == self.EMPTY:
+                    result = max(result, row_hits + col_hits[x])
+        return result
