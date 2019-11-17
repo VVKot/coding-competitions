@@ -1,6 +1,6 @@
 """
-T: O(NlogN)
-S: O(N)
+T: O(NlogN*L)
+S: O(N+L) - because Timsort uses O(N) additional memory
 
 Compress requirements into the one lambda.
 All that we have to check is the first letter of the first word.
