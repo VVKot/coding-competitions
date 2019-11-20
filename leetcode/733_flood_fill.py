@@ -1,3 +1,14 @@
+"""
+T: O(R*C)
+S: O(R*C)
+
+We check if the new color is the same - in this case, no action is needed.
+After that, we do DFS from the starting point using old color as a way to tell
+which nodes we should consider. No need to maintain a separate set of visited
+nodes since we already know that by their color.
+"""
+
+
 from typing import List, Tuple
 
 
