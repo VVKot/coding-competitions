@@ -39,11 +39,7 @@ class Solution:
         return file_name, curr_level
 
     def is_file(self, file_name: str) -> bool:
-        try:
-            file_name.index(self.DOT)
-        except ValueError:
-            return False
-        return True
+        return self.DOT in file_name
 
     def get_path_len(self, curr_path: List[str]) -> int:
         return len(self.SLASH.join(curr_path))
