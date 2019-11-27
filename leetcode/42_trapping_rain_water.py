@@ -1,3 +1,15 @@
+"""
+T: O(N)
+S: O(1)
+
+For each position, we need to know the highest wall to the left
+and to the right. The difference between the minimum of those and
+the current bar's height is the amount of trapped water at the current
+point. We utilize two points to continuously stay at the lower
+end of the bars.
+"""
+
+
 from typing import List
 
 
