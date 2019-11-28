@@ -1,14 +1,31 @@
+"""
+T: O(N)
+S: O(1)
+
+This is a classical DP problem. For each iteration, we need to consider
+our previous one. If both element pairs are in order, we either leave them all
+as is or swap everything before them and current elements. If they are in the
+reverse correct order(prev_A < next_B and prev_B < next_A), we can either
+leave the reversed order count or swapped every up until a current point and
+current elements.
+"""
+
+from typing import List
+
+
 class Solution:
-    def minSwap(self, A, B):
+
+    def minSwap(self, A: List[int], B: List[int]) -> int:
+        natural, swapped = 0, 1
         N = len(A)
-        prev = [0, 1]
-        for i in range(1, N):
-            curr = [float('inf'), float('inf')]
-            if A[i] > B[i-1] and B[i] > A[i-1]:
-                curr[0] = min(curr[0], prev[1])
-                curr[1] = min(curr[1], prev[0]+1)
-            if A[i] > A[i-1] and B[i] > B[i-1]:
-                curr[0] = min(curr[0], prev[0])
-                curr[1] = min(curr[1], prev[1]+1)
-            prev = curr
-        return min(prev)
+        for i in range(N-1):
+            new_natural = new_swapped = float('inf')
+            a1, b1, a2, b2 = A[i], B[i], A[i+1], B[i+1]
+            if a1 < a2 and b1 < b2:
+                new_natural = natural
+                new_swapped = swapped + 1
+            if a1 < b2 and b1 < a2:
+                new_natural = min(new_natural, swapped)
+                new_swapped = min(new_swapped, natural+1)
+            natural, swapped = new_natural, new_swapped
+        return min(natural, swapped)
