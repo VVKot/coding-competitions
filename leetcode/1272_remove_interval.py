@@ -19,11 +19,8 @@ class Solution:
         processed_intervals = []
         remove_start, remove_end = toBeRemoved
         for start, end in intervals:
-            if remove_end <= start or remove_start >= end:
-                processed_intervals.append([start, end])
-            else:
-                if remove_start > start:
-                    processed_intervals.append([start, remove_start])
-                if remove_end < end:
-                    processed_intervals.append([remove_end, end])
+            if start < remove_start:
+                processed_intervals.append([start, min(end, remove_start)])
+            if end > remove_end:
+                processed_intervals.append([max(start, remove_end), end])
         return processed_intervals
