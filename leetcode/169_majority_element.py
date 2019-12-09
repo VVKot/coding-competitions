@@ -10,7 +10,8 @@ In the end, the last most common item is the most common overall
 T: O(N)
 S: O(1)
 
-Count the number of bits in each position and if it is a majority - set this bit in the result.
+Count the number of bits in each position and if it is a majority -
+set this bit in the result.
 31st bit is the sign bit, so we have to treat is separate.
 """
 
