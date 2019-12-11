@@ -1,3 +1,11 @@
+"""
+T: O(N)
+S: O(1)
+
+The idea is to get the sum of range [0, N] and subtract from it the sum of
+the array. The code demonstrates how to do that in overflow-prone languages.
+"""
+
 from typing import List
 
 
