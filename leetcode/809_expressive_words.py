@@ -1,6 +1,4 @@
 """
-https://leetcode.com/problems/expressive-words
-
 T: O(S+W*L) - L is maximum length of a word
 S: O(S+L)
 
