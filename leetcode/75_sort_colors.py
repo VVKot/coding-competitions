@@ -1,15 +1,25 @@
+"""
+T: O(N)
+S: O(1)
+
+A solution without swapping which utilizes a fact that this problem does not
+require to swap object by their key, just numbers. In that case, we can count
+the last position of zeroes and ones, and insert the numbers at appropriate
+positions. We insert two by default so we don't need a counter for it.
+"""
+
 from typing import List
 
 
 class Solution:
 
     def sortColors(self, nums: List[int]) -> None:
-        zero = one = 0
+        zeroes_count = ones_count = 0
         for i, num in enumerate(nums):
             nums[i] = 2
             if num < 2:
-                nums[one] = 1
-                one += 1
+                nums[ones_count] = 1
+                ones_count += 1
             if num == 0:
-                nums[zero] = 0
-                zero += 1
+                nums[zeroes_count] = 0
+                zeroes_count += 1
