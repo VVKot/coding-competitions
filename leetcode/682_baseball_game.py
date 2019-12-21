@@ -1,3 +1,10 @@
+"""
+T: O(N)
+S: O(N)
+
+We use a stack to store previous scores. That's it!
+"""
+
 from typing import List
 
 
