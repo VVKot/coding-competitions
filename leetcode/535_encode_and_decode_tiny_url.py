@@ -1,26 +1,34 @@
-import string
+"""
+T: O(N)
+S: O(N)
+
+We need to only store one mapping using this scheme. Also, the performance of
+the encoding method can be treated as O(1) due to the total number of short
+URLs being quite large - 62**6.
+"""
+
 import random
+import string
 
 
 class Codec:
 
-    symbols = string.ascii_lowercase + '0123456789'
+    ALPHABET = string.digits + string.ascii_letters
 
-    def __init__(self):
-        self.code_to_url = {}
+    def __init__(self, url_len=6):
+        self.url_len = url_len
+        self.url_map = {}
 
-    def get_random_code(self, count):
-        return ''.join([random.choice(Codec.symbols) for _ in range(count)])
+    def encode(self, longUrl: str) -> str:
+        short_url = self._get_short_url()
+        while short_url in self.url_map:
+            short_url = self._get_short_url()
+        self.url_map[short_url] = longUrl
+        return short_url
 
-    def encode(self, longUrl):
-        code = ""
-        while not code:
-            random_code = self.get_random_code(6)
-            if random_code not in self.code_to_url:
-                code = random_code
-                self.code_to_url[code] = longUrl
-        return 'https://tinyurl.com/{}'.format(code)
+    def decode(self, shortUrl: str) -> str:
+        return self.url_map[shortUrl]
 
-    def decode(self, shortUrl):
-        code = shortUrl[-6:]
-        return self.code_to_url[code]
+    def _get_short_url(self) -> str:
+        return "".join(
+            random.choice(self.ALPHABET) for _ in range(self.url_len))
