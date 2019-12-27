@@ -1,12 +1,18 @@
+"""
+T: O(N)
+S: O(1)
+
+Move two pointers from the ends of both arrays. If we reach the beginning of
+either array, we should if it is the first pointer. If so, we still have more
+elements to copy using the second pointer.
+"""
+
 from typing import List
 
 
 class Solution:
 
-    def merge(self,
-              nums1: List[int],
-              m: int,
-              nums2: List[int], n: int) -> None:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
         write_pointer = m + n - 1
         nums1_pointer = m - 1
         nums2_pointer = n - 1
