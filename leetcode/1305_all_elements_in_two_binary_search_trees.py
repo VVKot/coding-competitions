@@ -6,19 +6,22 @@ Do two inorder traversals in parallel. On each iteration select stack with the
 minimum last element.
 """
 
-from typign import List
+from typing import List, Tuple
+
 
 class TreeNode:
+
     def __init__(self, x):
         self.val = x
         self.left = None
         self.right = None
 
+
 class Solution:
 
     def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
         all_elements = []
-        stack1, stack2 = [], []  # type: List[int], List[int]
+        stack1, stack2 = [], []  # type: List[TreeNode], List[TreeNode]
         while any([root1, root2, stack1, stack2]):
             stack1, root1 = self.push_left(stack1, root1)
             stack2, root2 = self.push_left(stack2, root2)
@@ -30,14 +33,18 @@ class Solution:
             else:
                 root2 = curr.right
         return all_elements
-    
-    def push_left(self, stack: List[int], root: int) -> List[int], int:
+
+    def push_left(self,
+                  stack: List[TreeNode],
+                  root: TreeNode) -> Tuple[List[TreeNode], TreeNode]:
         while root:
             stack.append(root)
             root = root.left
         return stack, root
 
-    def get_smallest_stack(self, stack1: List[int], stack2: List[int]) -> List[int]:
+    def get_smallest_stack(self,
+                           stack1: List[TreeNode],
+                           stack2: List[TreeNode]) -> List[TreeNode]:
         if stack1 and stack2:
             return stack1 if stack1[-1].val <= stack2[-1].val else stack2
         return stack1 or stack2
