@@ -11,7 +11,6 @@ to be the same as the number of nodes, the balance of root is guaranteed
 to be zero.
 """
 
-
 from typing import Dict, Optional
 
 
@@ -24,6 +23,7 @@ class TreeNode:
 
 
 class Solution:
+
     def distributeCoins(self, root: TreeNode) -> int:
         distribution_cost = 0
         nodes_to_process = [root]
