@@ -8,6 +8,8 @@ at least one duplicated character for the swap. If the strings are not equal,
 we check if there is a valid pair for swap.
 """
 
+from typing import Set
+
 
 class Solution:
 
@@ -15,8 +17,18 @@ class Solution:
         if len(A) != len(B):
             return False
         if A == B:
-            return len(set(A)) != len(A)
-        pairs = [[a, b] for a, b in zip(A, B) if a != b]
+            seen_chars = set()  # type: Set[str]
+            for char in A:
+                if char in seen_chars:
+                    return True
+                seen_chars.add(char)
+            return False
+        pairs = []
+        for a, b in zip(A, B):
+            if a != b:
+                pairs.append([a, b])
+            if len(pairs) > 2:
+                return False
         if len(pairs) != 2:
             return False
         first, second = pairs
