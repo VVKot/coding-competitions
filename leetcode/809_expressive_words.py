@@ -28,20 +28,13 @@ class Solution:
         return expressive_word_count
 
     def get_groups(self, S: str) -> List[Tuple[str, int]]:
-        groups = []  # type: List[Tuple[str, int]]
-        for ch in S:
-            prev_ch, prev_count = groups[-1] if groups else ('', 0)
-            if prev_ch != ch:
-                groups.append((ch, 1))
-            else:
-                groups[-1] = (ch, prev_count + 1)
-        return groups
+        return [(ch, len(list(group))) for ch, group in itertools.groupby(S)]
 
     def is_extension(self, maybe_extension: List[Tuple[str, int]],
                      source: List[Tuple[str, int]]) -> bool:
-        for e, s in itertools.zip_longest(maybe_extension,
-                                          source,
-                                          fillvalue=('', 0)):
+        if len(maybe_extension) != len(source):
+            return False
+        for e, s in zip(maybe_extension, source):
             ext_char, ext_count = e
             src_char, src_count = s
             if ext_char != src_char:
