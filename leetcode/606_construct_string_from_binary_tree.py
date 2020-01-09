@@ -8,6 +8,8 @@ branch is empty and right is not we have to append empty left branch to
 differentiate between cases of empty left and right branch.
 """
 
+from typing import Dict, List, Optional
+
 
 class TreeNode:
 
@@ -19,24 +21,33 @@ class TreeNode:
 
 class Solution:
 
-    OPEN, CLOSE = '(', ')'
+    BEGIN_BRANCH, END_BRANCH = '(', ')'
 
     def tree2str(self, t: TreeNode) -> str:
-
-        def tree2str_rec(node):
+        nodes_to_process = [t]
+        processed_nodes = {
+            None: []
+        }  # type: Dict[Optional[TreeNode], List[str]]
+        while nodes_to_process:
+            node = nodes_to_process.pop()
             if not node:
-                return []
-            flattened_tree = [str(node.val)]
-            left, right = map(tree2str_rec, [node.left, node.right])
-            if left or right:
-                flattened_tree.append(self.OPEN)
-                flattened_tree.extend(left)
-                flattened_tree.append(self.CLOSE)
-            if right:
-                flattened_tree.append(self.OPEN)
-                flattened_tree.extend(right)
-                flattened_tree.append(self.CLOSE)
-            return flattened_tree
+                continue
+            if node.left in processed_nodes and node.right in processed_nodes:
+                left, right = map(processed_nodes.get, [node.left, node.right])
+                curr_subtree = [str(node.val)]
+                if left or right:
+                    self.add_branch(curr_subtree, left)
+                if right:
+                    self.add_branch(curr_subtree, right)
+                processed_nodes[node] = curr_subtree
+            else:
+                nodes_to_process.append(node)
+                nodes_to_process.append(node.right)
+                nodes_to_process.append(node.left)
+        return ''.join(processed_nodes[t])
 
-        flattened = tree2str_rec(t)
-        return ''.join(flattened)
+    def add_branch(self, flat_tree: List[str],
+                   flat_branch: List[str]) -> List[str]:
+        flat_tree.append(self.BEGIN_BRANCH)
+        flat_tree.extend(flat_branch)
+        flat_tree.append(self.END_BRANCH)
