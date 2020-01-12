@@ -4,11 +4,11 @@ from typing import List
 class Solution:
 
     def fixedPoint(self, A: List[int]) -> int:
-        left, right = 0, len(A) - 1
-        while left < right:
-            mid = (left + right) // 2
+        lo, hi = 0, len(A) - 1
+        while lo < hi:
+            mid = lo + (hi - lo) // 2
             if A[mid] < mid:
-                left = mid + 1
+                lo = mid + 1
             else:
-                right = mid
-        return left if A[left] == left else -1
+                hi = mid
+        return lo if A[lo] == lo else -1
