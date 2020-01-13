@@ -7,7 +7,7 @@ become straightforward. To generate the flat list we DFS through the input.
 """
 
 import collections
-from typing import List, Union
+from typing import Deque, List
 """
 This is the interface that allows for creating nested lists.
 You should not implement it, or speculate about its implementation
@@ -29,23 +29,18 @@ class NestedInteger:
 class NestedIterator:
 
     def __init__(self, nestedList: List[NestedInteger]):
-        self.flat_list = collections.deque(
-            [])  # type: Union(NestedInteger, List[NestedInteger])
-        to_parse = collections.deque(nestedList)
-        while to_parse:
-            curr = to_parse.popleft()
+        self.processed_elements = collections.deque([])  # type: Deque[int]
+        elements_to_process = collections.deque(nestedList)
+        while elements_to_process:
+            curr = elements_to_process.popleft()
             if curr.isInteger():
-                self.flat_list.append(curr.getInteger())
-            for list_item in reversed(curr.getList()):
-                to_parse.appendleft(list_item)
+                self.processed_elements.append(curr.getInteger())
+            else:
+                for elem in reversed(curr.getList()):
+                    elements_to_process.appendleft(elem)
 
     def next(self) -> int:
-        return self.flat_list.popleft()
+        return self.processed_elements.popleft()
 
     def hasNext(self) -> bool:
-        return len(self.flat_list) != 0
-
-
-# Your NestedIterator object will be instantiated and called as such:
-# i, v = NestedIterator(nestedList), []
-# while i.hasNext(): v.append(i.next())
+        return bool(self.processed_elements)
