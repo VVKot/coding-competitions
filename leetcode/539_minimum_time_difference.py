@@ -17,9 +17,9 @@ class Solution:
     MINS_IN_DAY = HOURS_IN_DAY * MINS_IN_HOUR
 
     def findMinDifference(self, timePoints: List[str]) -> int:
-        timePoints.sort()
         timestamps = self.get_timestamps(timePoints)
-        min_difference = 24 * 60
+        timestamps.sort()
+        min_difference = self.MINS_IN_DAY
         N = len(timestamps)
         for i in range(1, N):
             curr_difference = timestamps[i] - timestamps[i - 1]
