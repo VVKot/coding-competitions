@@ -14,12 +14,12 @@ from typing import List
 class Solution:
 
     def sortColors(self, nums: List[int]) -> None:
-        zeroes_count = ones_count = 0
+        zero_pointer = one_pointer = 0
         for i, num in enumerate(nums):
             nums[i] = 2
             if num < 2:
-                nums[ones_count] = 1
-                ones_count += 1
+                nums[one_pointer] = 1
+                one_pointer += 1
             if num == 0:
-                nums[zeroes_count] = 0
-                zeroes_count += 1
+                nums[zero_pointer] = 0
+                zero_pointer += 1
