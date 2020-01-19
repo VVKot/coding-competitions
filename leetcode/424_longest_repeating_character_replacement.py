@@ -17,17 +17,14 @@ from typing import Counter
 class Solution:
 
     def characterReplacement(self, s: str, k: int) -> int:
+        char_count = collections.Counter()  # type: Counter[str]
+        max_count = 0
         left = 0
-        total_count = max_count = 0
-        max_str_len = 0
-        ch_count = collections.Counter()  # type: Counter[str]
-        for right, ch in enumerate(s):
-            ch_count[ch] += 1
-            total_count += 1
-            max_count = max(max_count, ch_count[ch])
-            if total_count - max_count > k:
-                ch_count[s[left]] -= 1
-                total_count -= 1
+        for right, char in enumerate(s):
+            char_count[char] += 1
+            max_count = max(max_count, char_count[char])
+            current_len = right - left + 1
+            if current_len - max_count > k:
+                char_count[s[left]] -= 1
                 left += 1
-            max_str_len = max(max_str_len, right - left + 1)
-        return max_str_len
+        return len(s) - left
