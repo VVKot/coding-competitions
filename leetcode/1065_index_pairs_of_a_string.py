@@ -1,10 +1,12 @@
 """
-T: O(N**2)
+T: O(N**3)
 S: O(N) -> does not consider output space
 
 We move through the text and collect prefixes that are present in words.
 When we seen an actual word, we add its position to the result.
 """
+
+from typing import List
 
 
 class Trie:
@@ -40,21 +42,22 @@ class Trie:
 
 
 class Solution:
-    def indexPairs(self, text, words):
-        word_trie = Trie()
-        for word in words:
-            word_trie.insert(word)
+
+    def indexPairs(self, text: str, words: List[str]) -> List[List[int]]:
+        trie = self.build_trie(words)
         index_pairs = []
-        prefixes = []
-        for end, ch in enumerate(text):
-            prefixes.append("")
-            new_prefixes = []
-            for prefix in prefixes:
-                new_prefix = prefix + ch
-                if word_trie.search(new_prefix):
-                    start = end - len(new_prefix) + 1
-                    index_pairs.append([start, end])
-                if word_trie.starts_with(new_prefix):
-                    new_prefixes.append(new_prefix)
-            prefixes = new_prefixes[:]
-        return sorted(index_pairs)
+        S = len(text)
+        for left in range(S):
+            for right in range(left, S):
+                curr_substring = text[left:right + 1]
+                if not trie.starts_with(curr_substring):
+                    break
+                if trie.search(curr_substring):
+                    index_pairs.append([left, right])
+        return index_pairs
+
+    def build_trie(self, words: List[str]) -> Trie:
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
+        return trie
