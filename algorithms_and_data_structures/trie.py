@@ -9,7 +9,7 @@ class Trie:
         trie = self.trie
         for ch in word:
             trie = trie.setdefault(ch, {})
-        trie[self.WORD_MARK] = self.WORD_MARK
+        trie[self.WORD_MARK] = {}
 
     def search(self, word: str) -> bool:
         trie = self.trie
@@ -27,4 +27,4 @@ class Trie:
                 trie = trie[ch]
             else:
                 return False
-        return bool(trie)
+        return True
