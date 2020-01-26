@@ -22,7 +22,7 @@ class Trie:
             trie = trie.setdefault(ch, {})
         trie[self.WORD_MARK] = {}
 
-    def search(self, word: str) -> bool:
+    def full_match(self, word: str) -> bool:
         trie = self.trie
         for ch in word:
             if ch in trie:
@@ -52,7 +52,7 @@ class Solution:
                 curr_substring = text[left:right + 1]
                 if not trie.starts_with(curr_substring):
                     break
-                if trie.search(curr_substring):
+                if trie.full_match(curr_substring):
                     index_pairs.append([left, right])
         return index_pairs
 
