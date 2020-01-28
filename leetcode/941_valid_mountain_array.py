@@ -4,15 +4,13 @@ from typing import List
 class Solution:
 
     def validMountainArray(self, A: List[int]) -> bool:
-        last = len(A) - 1
-        if last < 2:
-            return False
+        end_index = len(A) - 1
         peak = 0
-        while peak < last and A[peak] < A[peak+1]:
+        while peak < end_index and A[peak] < A[peak+1]:
             peak += 1
-        if peak == 0 or peak == last:
+        if peak == 0 or peak == end_index:
             return False
         downhill = peak
-        while downhill < last and A[downhill] > A[downhill+1]:
+        while downhill < end_index and A[downhill] > A[downhill+1]:
             downhill += 1
-        return downhill == last
+        return downhill == end_index
