@@ -12,5 +12,5 @@ class Solution:
         return "".join([self.MORSE_WORDS[ord(ch) - ord("a")] for ch in word])
 
     def uniqueMorseRepresentations(self, words: List[str]) -> int:
-        words = [self.get_morse_word(word) for word in words]
-        return len(set(words))
+        words = {self.get_morse_word(word) for word in words}
+        return len(words)
