@@ -2,8 +2,10 @@
 T: O(N)
 S: O(N)
 
-Start with left and right children of the root. After that, check their
-children in mirrored fashion - left with right and right with left.
+Start with left and right children of the root. For a tree to be symmetric
+both of them should either have same value or both be emptry. If that condition
+holds, check their children in mirrored fashion - first left with second right
+and first right with second left.
 """
 
 
