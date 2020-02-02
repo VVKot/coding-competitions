@@ -1,3 +1,13 @@
+"""
+T: O(N + R)
+S: O(R) - range of different values in A
+
+Since the range of array values is limited we can apply bucket sort.
+Find all of the buckets and then move two pointers to find the largest
+possible sum. We have to check new S with max() because we are decreasing
+the sum by moving pointer in the else case
+"""
+
 from typing import List
 
 
