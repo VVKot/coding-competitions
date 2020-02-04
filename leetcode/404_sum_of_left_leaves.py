@@ -1,11 +1,13 @@
 class TreeNode:
-    def __init__(self, x):
+
+    def __init__(self, x: int):
         self.val = x
         self.left = None
         self.right = None
 
 
 class Solution:
+
     def sumOfLeftLeaves(self, root: TreeNode) -> int:
         result = 0
         stack = [(root, False)]
@@ -13,10 +15,9 @@ class Solution:
             curr, is_left = stack.pop()
             if not curr:
                 continue
-            if not curr.left and not curr.right:
-                if is_left:
-                    result += curr.val
-            else:
+            if curr.left or curr.right:
                 stack.append((curr.left, True))
                 stack.append((curr.right, False))
+            elif is_left:
+                result += curr.val
         return result
