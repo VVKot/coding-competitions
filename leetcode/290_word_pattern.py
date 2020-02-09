@@ -10,6 +10,7 @@ the answer is false. Otherwise, it is true, no matter the exact mapping from
 letters to words.
 """
 
+
 class Solution:
 
     def wordPattern(self, pattern: str, sequence: str) -> bool:
