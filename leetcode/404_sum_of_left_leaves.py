@@ -1,3 +1,13 @@
+"""
+T: O(N)
+S: O(N)
+
+Walk through the whole tree and check every node marking their relation to the
+parent. If a given node is not a leaf, add its children to processing. If it is
+a leaf - check if it is a left leaf, and if so - add its value to the sum.
+"""
+
+
 class TreeNode:
 
     def __init__(self, x: int):
