@@ -2,11 +2,12 @@
 T: O(N)
 S: O(1)
 
-We use the fact that initial string is balanced. If the previous found
+We use the fact that the initial string is balanced. If the previous found
 interval is balanced, then the next interval is either balanced or empty.
-It it wasn't so - the whole string would not be balanced, which contradicts
-the inital propmt
+If it wasn't so - the whole string would not be balanced, which contradicts
+the initial prompt.
 """
+
 
 class Solution:
 
