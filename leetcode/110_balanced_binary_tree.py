@@ -6,6 +6,7 @@ Simple recursive solution based on determining the depth of subtrees.
 If some subtree is inbalanced - mark its depth as such and propagate it.
 """
 
+
 class TreeNode:
 
     def __init__(self, x):
@@ -26,6 +27,6 @@ class Solution:
             return 0
         left = self.get_depth(root.left)
         right = self.get_depth(root.right)
-        if left == self.INBALANCED_MARK or right == self.INBALANCED_MARK or abs(left - right) > 1:
+        if self.INBALANCED_MARK in [left, right] or abs(left - right) > 1:
             return self.INBALANCED_MARK
         return 1 + max(left, right)
