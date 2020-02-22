@@ -2,7 +2,7 @@
 T: O(N)
 S: O(1)
 
-Measure initial slope dy/dx. Check that the slope is the same at for all
+Measure initial slope dy/dx. Check that the slope is the same for all
 points. The regular way to do so is to check that dy/dx == dy_i/dx_i but that
 can lead to division by zero. To avoid that we use multiplication form:
 dx*dy_i == dx_i*dy
