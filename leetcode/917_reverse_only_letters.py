@@ -1,17 +1,26 @@
+"""
+T: O(N)
+S: O(N)
+
+Using two pointers, find the left and right letters. Then swap them. Doing this
+in O(1) time is not possible due to the immutability of strings.
+"""
+
+
 class Solution:
 
     def reverseOnlyLetters(self, S: str) -> str:
         chars = list(S)
-        i, j = 0, len(S) - 1
-        while i < j:
-            is_i_letter = chars[i].isalpha()
-            is_j_letter = chars[j].isalpha()
-            if is_i_letter and is_j_letter:
-                chars[i], chars[j] = chars[j], chars[i]
-                i += 1
-                j -= 1
-            elif is_i_letter:
-                j -= 1
+        left, right = 0, len(S) - 1
+        while left < right:
+            is_left_letter = chars[left].isalpha()
+            is_right_letter = chars[right].isalpha()
+            if is_left_letter and is_right_letter:
+                chars[left], chars[right] = chars[right], chars[left]
+                left += 1
+                right -= 1
+            elif is_left_letter:
+                right -= 1
             else:
-                i += 1
-        return ''.join(chars)
+                left += 1
+        return "".join(chars)
