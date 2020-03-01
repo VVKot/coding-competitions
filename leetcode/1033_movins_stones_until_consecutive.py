@@ -1,3 +1,14 @@
+"""
+T: O(1)
+S: O(1)
+
+The maximum number of moves is just the total number of empty slots between
+stones. The minimum number is:
+* 0 - if there are no empty slots, i.e. both gaps have length 0
+* 1 - if one of the gaps is of length 0 or 1
+* 2 - if neither of the mentioned conditions is satisfied
+"""
+
 from typing import List
 
 
