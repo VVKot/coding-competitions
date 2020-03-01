@@ -1,15 +1,16 @@
+from typing import List
+
+
 class Solution:
 
-    def numMovesStones(self, a, b, c):
+    def numMovesStones(self, a: int, b: int, c: int) -> List[int]:
         a, b, c = sorted([a, b, c])
-        left = abs(b-a) - 1
-        right = abs(c-b)-1
-        max_ = left + right
-        min_ = None
-        if not left and not right:
-            min_ = 0
-        elif not left or not right or left == 1 or right == 1:
-            min_ = 1
-        else:
-            min_ = 2
-        return [min_, max_]
+        left_gap = abs(b - a) - 1
+        right_gap = abs(c - b) - 1
+        max_moves = left_gap + right_gap
+        min_moves = 1
+        if left_gap == right_gap == 0:
+            min_moves = 0
+        elif left_gap > 1 and right_gap > 1:
+            min_moves = 2
+        return [min_moves, max_moves]
