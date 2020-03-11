@@ -3,7 +3,7 @@ package leetcode.java;
 /**
  * T: O(NlogN) S: O(1)
  *
- * <p>We can determine the best solution greedily. We have to group numbers in sorted order and take
+ * We can determine the best solution greedily. We have to group numbers in sorted order and take
  * minimum of every pair which are at the odd positions.
  */
 import java.util.Arrays;
