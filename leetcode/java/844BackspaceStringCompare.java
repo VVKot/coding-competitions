@@ -1,30 +1,45 @@
 package leetcode.java;
 
 /**
- * T: O(S+T) S: O(S+T)
+ * T: O(S+T) S: O(1)
  * 
- * Simulate what the question is asking for - find the resulting strings and compare them.
+ * Start from the end of the string and find non-backspace characters. Compare them and terminate
+ * early if we go out of bounds for any of the strings.
  */
-import java.util.Stack;
 
 class Solution {
     public boolean backspaceCompare(String S, String T) {
-        Stack<Character> s = getStringWithoutWhitespace(S);
-        Stack<Character> t = getStringWithoutWhitespace(T);
-        return s.equals(t);
-    }
-
-    public Stack<Character> getStringWithoutWhitespace(String source) {
-        Stack<Character> stringWithoutWhitespace = new Stack<>();
-        for (char ch : source.toCharArray()) {
-            if (ch == '#') {
-                if (!stringWithoutWhitespace.empty()) {
-                    stringWithoutWhitespace.pop();
+        int i = S.length() - 1, j = T.length() - 1;
+        int countS = 0, countT = 0;
+        while (i >= 0 || j >= 0) {
+            while (i >= 0 && (S.charAt(i) == '#' || countS > 0)) {
+                if (S.charAt(i) == '#') {
+                    countS += 1;
+                } else {
+                    countS -= 1;
                 }
-            } else {
-                stringWithoutWhitespace.push(ch);
+                i -= 1;
             }
+
+            while (j >= 0 && (T.charAt(j) == '#' || countT > 0)) {
+                if (T.charAt(j) == '#') {
+                    countT += 1;
+                } else {
+                    countT -= 1;
+                }
+                j -= 1;
+            }
+
+            if (i < 0 || j < 0) {
+                return i == j;
+            }
+
+            if (S.charAt(i) != T.charAt(j)) {
+                return false;
+            }
+            i -= 1;
+            j -= 1;
         }
-        return stringWithoutWhitespace;
+        return i == j;
     }
 }
