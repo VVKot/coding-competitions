@@ -27,17 +27,17 @@ class Solution {
   }
 
   private boolean isWordSmaller(
-      String string, String string2, Map<Character, Integer> charPositions) {
-    for (int i = 0; i < string.length() && i < string2.length(); i++) {
-      int position = charPositions.get(string.charAt(i));
-      int position2 = charPositions.get(string2.charAt(i));
-      if (position < position2) {
+      String currentWord, String nextWord, Map<Character, Integer> charPositions) {
+    for (int i = 0; i < currentWord.length() && i < nextWord.length(); i++) {
+      int currentWordCharPosition = charPositions.get(currentWord.charAt(i));
+      int nextWordCharPosition = charPositions.get(nextWord.charAt(i));
+      if (currentWordCharPosition < nextWordCharPosition) {
         return true;
       }
-      if (position > position2) {
+      if (currentWordCharPosition > nextWordCharPosition) {
         return false;
       }
     }
-    return string.length() < string2.length();
+    return currentWord.length() < nextWord.length();
   }
 }
