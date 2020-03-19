@@ -15,14 +15,13 @@ class Solution {
       String word = words[i];
       if (word.equals(word1)) {
         position1 = i;
-      }
-      if (words.equals(word2)) {
+      } else if (word.equals(word2)) {
         position2 = i;
+      } else {
+        continue;
       }
-      if (words.equals(word1) || word.equals(word2)) {
-        if (position1 != SENTINEL_POSITION && position2 != SENTINEL_POSITION) {
-          minDistance = Math.min(minDistance, Math.abs(position1 - position2));
-        }
+      if (position1 != SENTINEL_POSITION && position2 != SENTINEL_POSITION) {
+        minDistance = Math.min(minDistance, Math.abs(position1 - position2));
       }
     }
     return minDistance;
