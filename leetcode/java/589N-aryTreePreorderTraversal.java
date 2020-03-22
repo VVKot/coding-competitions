@@ -1,11 +1,13 @@
 /**
  * T: O(N) S: O(N)
  *
- * <p>Use recursion - traverse the current node first and then all of its children afterwards, from
- * first to last.
+ * <p>Use iteration - traverse the current node first and then all of its children afterwards, from
+ * first to last. To achieve that we need to push them to the stack in reverse order.
  */
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 class Node {
   public int val;
@@ -25,13 +27,18 @@ class Node {
 
 class Solution {
   public List<Integer> preorder(final Node root) {
-    if (root == null) {
-      return new ArrayList<>();
-    }
     List<Integer> preorderTraversal = new ArrayList<>();
-    preorderTraversal.add(root.val);
-    for (Node child : root.children) {
-      preorderTraversal.addAll(preorder(child));
+    Stack<Node> nodesToProcess = new Stack<Node>() {};
+    nodesToProcess.push(root);
+    while (!nodesToProcess.isEmpty()) {
+      Node currentNode = nodesToProcess.pop();
+      if (currentNode != null) {
+        preorderTraversal.add(currentNode.val);
+        Collections.reverse(currentNode.children);
+        for (Node child : currentNode.children) {
+          nodesToProcess.add(child);
+        }
+      }
     }
     return preorderTraversal;
   }
