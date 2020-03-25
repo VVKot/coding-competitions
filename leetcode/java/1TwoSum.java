@@ -1,9 +1,7 @@
-package leetcode.java;
-
 /**
  * T: O(N) S: O(N)
  *
- * Remember numbers we have seen so far alongside their indices. Return a sorted pair of indices
+ * <p>Remember numbers we have seen so far alongside their indices. Return a sorted pair of indices
  * when we see a number that is complement to the previously seen one.
  */
 import java.util.HashMap;

@@ -1,5 +1,3 @@
-package leetcode.java;
-
 /**
  * T: O(N) S: O(N)
  *

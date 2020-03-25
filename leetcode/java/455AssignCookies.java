@@ -1,11 +1,9 @@
-package leetcode.java;
-
 /**
  * T: O(GlogG + SlogS) S: O(1)
  *
- * Sort both cookies and greed size values. Iterate over cookie sizes and check if the current size
- * is sufficient for the current child. If so - try to satisfy the next child. Continue until there
- * is no more cookies left or all children are satisfied.
+ * <p>Sort both cookies and greed size values. Iterate over cookie sizes and check if the current
+ * size is sufficient for the current child. If so - try to satisfy the next child. Continue until
+ * there is no more cookies left or all children are satisfied.
  */
 import java.util.Arrays;
 
