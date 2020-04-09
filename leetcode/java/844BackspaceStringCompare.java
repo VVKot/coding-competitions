@@ -7,26 +7,9 @@
 class Solution {
   public boolean backspaceCompare(String S, String T) {
     int i = S.length() - 1, j = T.length() - 1;
-    int countS = 0, countT = 0;
     while (i >= 0 || j >= 0) {
-      while (i >= 0 && (S.charAt(i) == '#' || countS > 0)) {
-        if (S.charAt(i) == '#') {
-          countS += 1;
-        } else {
-          countS -= 1;
-        }
-        i -= 1;
-      }
-
-      while (j >= 0 && (T.charAt(j) == '#' || countT > 0)) {
-        if (T.charAt(j) == '#') {
-          countT += 1;
-        } else {
-          countT -= 1;
-        }
-        j -= 1;
-      }
-
+      i = this.findFirstNonBackspace(S, i);
+      j = this.findFirstNonBackspace(T, j);
       if (i < 0 || j < 0) {
         return i == j;
       }
@@ -38,5 +21,19 @@ class Solution {
       j -= 1;
     }
     return i == j;
+  }
+
+  private int findFirstNonBackspace(String S, int startingPosition) {
+    int i = startingPosition;
+    int backspaceCount = 0;
+    while (i >= 0 && (S.charAt(i) == '#' || backspaceCount > 0)) {
+      if (S.charAt(i) == '#') {
+        backspaceCount += 1;
+      } else {
+        backspaceCount -= 1;
+      }
+      i -= 1;
+    }
+    return i;
   }
 }
