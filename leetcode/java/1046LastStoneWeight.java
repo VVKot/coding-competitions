@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
 class Solution {
   public int lastStoneWeight(int[] stones) {
     PriorityQueue<Integer> weightedStones =
-        new PriorityQueue<>(stones.length, Comparator.reverseOrder());
+        new PriorityQueue<>(Comparator.reverseOrder());
     for (int stone : stones) {
       weightedStones.offer(stone);
     }
