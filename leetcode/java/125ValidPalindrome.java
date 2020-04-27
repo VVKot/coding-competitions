@@ -1,7 +1,7 @@
 /**
  * T: O(N) S: O(1)
  *
- * <p>Use two pointers, find first alphanumeric charaters from the left and from the right. If they
+ * <p>Use two pointers, find first alphanumeric characters from the left and from the right. If they
  * do not match - the string is not a palindrome. Otherwise, proceed to the next pair of
  * alphanumeric characters.
  */
