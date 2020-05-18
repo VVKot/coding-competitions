@@ -1,9 +1,11 @@
 /**
- * T: O(S) S: O(P) First, we construct a counter of the P to find the exact counts of needed
- * characters. After that, we traverse the S one character at a time. If we find a needed character
- * - we decrement the missing counter, if we reach the length of the anagram and pop needed
- * character from the left side - we increment the missing counter. If this counter is 0 - we know
- * that we have found an anagram.
+ * T: O(S) S: O(P)
+ *
+ * <p>First, we construct a counter of the P to find the exact counts of needed characters. After
+ * that, we traverse the S one character at a time. If we find a needed character - we decrement the
+ * missing counter, if we reach the length of the anagram and pop needed character from the left
+ * side - we increment the missing counter. If this counter is 0 - we know that we have found an
+ * anagram.
  */
 import java.util.HashMap;
 import java.util.LinkedList;
