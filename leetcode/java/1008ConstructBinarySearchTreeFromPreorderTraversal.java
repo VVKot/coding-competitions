@@ -6,11 +6,12 @@
  * last added node in case of new left child. After that, put the node to the appropriate property
  * of the parent and add it to the stack.
  */
-import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
 
 public class TreeNode {
   int val;
+
   TreeNode left;
   TreeNode right;
 
@@ -25,7 +26,7 @@ class Solution {
     if (numNodes == 0) {
       return null;
     }
-    Deque<TreeNode> existingNodes = new ArrayDeque<>();
+    Deque<TreeNode> existingNodes = new LinkedList<TreeNode>();
     TreeNode root = new TreeNode(preorder[0]);
     existingNodes.push(root);
     for (int i = 1; i < numNodes; i++) {
