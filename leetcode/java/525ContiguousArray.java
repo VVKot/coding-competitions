@@ -1,3 +1,11 @@
+/**
+ * T: O(N) S: O(N)
+ *
+ * <p>We traverse through the array and remember the balance at the current position. If we have
+ * seen such a balance already - there is a contiguous subarray that starts right after previous
+ * occurence and ends at the current position. To handle zero balance we store an imaginary zero
+ * balance at index -1.
+ */
 import java.util.HashMap;
 import java.util.Map;
 
