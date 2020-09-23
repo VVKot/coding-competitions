@@ -1,4 +1,4 @@
-package largestTimeFromDigits
+package main
 
 import (
 	"fmt"

@@ -1,4 +1,4 @@
-package largestTimeFromDigits
+package main
 
 func repeatedSubstringPattern(s string) bool {
 	sLen := len(s)
